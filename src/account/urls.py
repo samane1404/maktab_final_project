@@ -7,4 +7,6 @@ urlpatterns = [
     path('customer/<int:pk>', CustomerDetail.as_view()),
     path('manager/', ManagerList.as_view()),
     path('manager/<int:pk>', ManagerDetail.as_view()),
+    path('address/', AddressList.as_view()),
+    path('address/<int:pk>', AddressDetail.as_view()),
 ]

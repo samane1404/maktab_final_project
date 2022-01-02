@@ -22,3 +22,11 @@ class ManagerList(generics.ListAPIView):
 class ManagerDetail(generics.RetrieveAPIView):
     queryset = Manager.objects.all()
     serializer_class = ManagerSerializer
+
+class AddressList(generics.ListAPIView):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
+
+class AddressDetail(generics.RetrieveAPIView):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
