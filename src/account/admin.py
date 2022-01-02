@@ -9,7 +9,7 @@ class RegisterAdmin(admin.ModelAdmin):
     list_filter = ['first_name', 'last_name']
     list_per_page = 10
     search_fields = ('national_code', 'email')
-    readonly_fields = ['national_code', 'email']
+    # readonly_fields = ['national_code', 'email']
 
 @admin.register(Manager)
 class RegisterAdmin(admin.ModelAdmin):
@@ -18,4 +18,13 @@ class RegisterAdmin(admin.ModelAdmin):
     list_filter = ['first_name', 'last_name']
     list_per_page = 10
     search_fields = ('national_code', 'email')
-    readonly_fields = ['national_code', 'email']
+    # readonly_fields = ['national_code', 'email']
+
+@admin.register(Address)
+class RegisterAdmin(admin.ModelAdmin):
+    list_display = ['city', 'main', 'postal_code']
+    list_display_links = ['postal_code']
+    list_filter = ['main', 'city']
+    list_per_page = 10
+    search_fields = ('postal_code', 'city')
+    # readonly_fields = ['postal_code']

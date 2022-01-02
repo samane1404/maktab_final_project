@@ -3,13 +3,12 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Customer(models.Model):
-    SEX = (("male", "male"),("female", "famale"))
     first_name = models.CharField(max_length=30, blank=True, null=True)
     last_name = models.CharField(max_length=30, blank=True, null=True)
-    national_code = models.CharField(max_length=10)
-    birthday_time = models.DateTimeField(auto_now=False, auto_now_add=False)
-    sex = models.CharField(max_length=10, choices=SEX)
-    email = models.EmailField(unique=True)
+    national_code = models.CharField(max_length=10, blank=True, null=True)
+    birthday_time = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+    sex = models.TextChoices('sex','male female')
+    email = models.EmailField(unique=True, blank=True, null=True)
     created_time = models.DateTimeField(auto_now_add=True)
     address = models.ManyToManyField('Address')
     def __str__(self):
@@ -19,15 +18,14 @@ class Customer(models.Model):
 
 
 class Manager(models.Model):
-    SEX = (("male", "male"),("female", "famale"))
+    # SEX = (("male", "male"),("female", "famale"))
     first_name = models.CharField(max_length=30, blank=True, null=True)
     last_name = models.CharField(max_length=30, blank=True, null=True)
-    national_code = models.CharField(max_length=10)
-    birthday_time = models.DateTimeField(auto_now=False, auto_now_add=False)
-    sex = models.CharField(max_length=10, choices=SEX)
-    email = models.EmailField(unique=True)
+    national_code = models.CharField(max_length=10, blank=True, null=True)
+    birthday_time = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+    sex = models.TextChoices('sex','male female')
+    email = models.EmailField(unique=True, blank=True, null=True)
     created_time = models.DateTimeField(auto_now_add=True)
-    address = models.ManyToManyField('Address')
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name)   
     class Meta:
@@ -35,7 +33,8 @@ class Manager(models.Model):
 
 class Address(models.Model):
     city = models.CharField(max_length=30, blank=True, null=True)
-    main_address = models.TextField(max_length=300)
+    address = models.TextField(max_length=300)
+    main = models.BooleanField()
     postal_code = models.IntegerField()
     created_time = models.DateTimeField(auto_now_add=True)
     def __str__(self):
