@@ -1,35 +1,56 @@
+from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
-class Customer(models.Model):
-    first_name = models.CharField(max_length=30, blank=True, null=True)
-    last_name = models.CharField(max_length=30, blank=True, null=True)
-    national_code = models.CharField(max_length=10, blank=True, null=True)
-    birthday_time = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
-    sex = models.TextChoices('sex','male female')
-    email = models.EmailField(unique=True, blank=True, null=True)
-    created_time = models.DateTimeField(auto_now_add=True)
-    address = models.ManyToManyField('Address')
+User = settings.AUTH_USER_MODEL
+
+
+class CustomUser(AbstractUser):
+    # id = models.AutoField(primary_key=True)
+    email = models.EmailField(unique=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+
     def __str__(self):
-        return '{} {}'.format(self.first_name, self.last_name)
-    class Meta:
-        ordering = ['created_time']
+        return self.username
 
 
-class Manager(models.Model):
-    # SEX = (("male", "male"),("female", "famale"))
-    first_name = models.CharField(max_length=30, blank=True, null=True)
-    last_name = models.CharField(max_length=30, blank=True, null=True)
-    national_code = models.CharField(max_length=10, blank=True, null=True)
-    birthday_time = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
-    sex = models.TextChoices('sex','male female')
-    email = models.EmailField(unique=True, blank=True, null=True)
-    created_time = models.DateTimeField(auto_now_add=True)
-    def __str__(self):
-        return '{} {}'.format(self.first_name, self.last_name)   
+class Customer(CustomUser):
     class Meta:
-        ordering = ['created_time']
+        proxy = True
+
+    # def save(self, *arg, **kwarg):
+    #     if self.id:
+    #         pass
+    #     else:
+    #         self.is_superuser = False
+    #         self.is_staff = False
+    #     return super(Customer, self).save(*arg, **kwarg)
+
+
+class Manager(CustomUser):
+    class Meta:
+        proxy = True
+
+    # def save(self, *arg, **kwarg):
+    #     if self.id:
+    #         pass
+    #     else:
+    #         self.is_superuser = False
+    #         self.is_staff = True
+    #     return super(Manager, self).save(*arg, **kwarg)
+
+
+class Admin(CustomUser):
+    class Meta:
+        proxy = True
+
+    # def save(self, *arg, **kwarg):
+    #     if self.id:
+    #         pass
+    #     else:
+    #         self.is_superuser = True
+    #     return super(Admin, self).save(*arg, **kwarg)
+
 
 class Address(models.Model):
     city = models.CharField(max_length=30, blank=True, null=True)
@@ -37,28 +58,10 @@ class Address(models.Model):
     main = models.BooleanField()
     postal_code = models.IntegerField()
     created_time = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
     def __str__(self):
-        return self.city 
+        return self.city
+
     class Meta:
         ordering = ['created_time']
-
-
-
-
-
-
-
-# class Customer(Register):
-#     class Meta:
-#         abstract = True
-#         ordering = ['created_tim']
-#     def __str__(self):
-#         return '{} {}'.format(self.first_name, self.last_name)
-
-# class Manager(Register):
-#     class Meta:
-#         abstract = True
-#         ordering = ['created_tim']
-#     def __str__(self):
-#         return '{} {}'.format(self.first_name, self.last_name)
-

@@ -37,28 +37,28 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'django.contrib.sites',
     'rest_framework',
     # 'django.contrib.sites',
 
     # 'crispy_forms', 
-    # 'allauth', # new 
+    # 'allauth', # new
     # 'allauth.account', # new
     # 'allauth.socialaccount',
 
     'account',
     'store',
 ]
+AUTH_USER_MODEL = 'account.CustomUser'
 
-# AUTH_USER_MODEL = 'accounts.CustomUser' 
-
-# LOGIN_REDIRECT_URL = 'home'
-# ACCOUNT_LOGOUT_REDIRECT  = 'home'
+LOGIN_REDIRECT_URL = 'home'
+ACCOUNT_LOGOUT_REDIRECT  = 'home'
 
 # SITE_ID = 1
-# AUTHENTICATION_BACKENDS = ( 
-#     'django.contrib.auth.backends.ModelBackend', 
-#     'allauth.account.auth_backends.AuthenticationBackend',
-#     )
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    # 'account.backends.EmailAuth',
+)
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
 
 # ACCOUNT_SESSION_REMEMBER = True 
@@ -74,6 +74,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # 'ai.middleware.current_user.CurrentUserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -83,7 +84,7 @@ ROOT_URLCONF = 'snapfood.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

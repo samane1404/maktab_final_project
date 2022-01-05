@@ -4,9 +4,12 @@ from django.contrib.auth.models import User
 from django.conf import settings 
 
 # Create your models here.
+User = settings.AUTH_USER_MODEL
 class Restaurant(models.Model):
     name = models.CharField(max_length=30, blank=True, null=True)
     created_time = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.name 
     class Meta:
@@ -22,6 +25,8 @@ class Branch(models.Model):
     category_food_id = models.ForeignKey('CategoryFood', on_delete=models.CASCADE)
     manager_id = models.OneToOneField('account.Manager', primary_key=True, on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='usee')
+
     def __str__(self):
         return self.name 
     class Meta:
@@ -34,6 +39,8 @@ class Food(models.Model):
     category_food_id = models.ForeignKey('CategoryFood', on_delete=models.CASCADE)
     category_meel_id = models.ManyToManyField('CategoryMeel')
     created_time = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.name 
     class Meta:
@@ -42,6 +49,8 @@ class Food(models.Model):
 class CategoryMeel(models.Model):
     name = models.CharField(max_length=30, blank=True, null=True)
     created_time = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.name
     class Meta:
@@ -50,6 +59,8 @@ class CategoryMeel(models.Model):
 class CategoryFood(models.Model):
     name = models.CharField(max_length=30, blank=True, null=True)
     created_time = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.name 
     class Meta:
@@ -61,6 +72,8 @@ class Menu(models.Model):
     food_id = models.ForeignKey(Food, on_delete=models.CASCADE)
     branch_id = models.ForeignKey(Branch, on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
     def __str__(self):
         return str(self.food_id)
     class Meta:
@@ -72,6 +85,8 @@ class OrderItem(models.Model):
     order_id = models.ForeignKey('Order', on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS, default='order')
     created_time = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.status
     class Meta:
@@ -80,6 +95,8 @@ class OrderItem(models.Model):
 class Order(models.Model):
     customer_id = models.ForeignKey(Customer,  on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='use')
+
     def __str__(self):
         return str(self.customer_id)
     class Meta:

@@ -1,0 +1,33 @@
+{% extends 'base.html' %} 
+
+{% block title %}Home{% endblock title %} 
+
+{% block content %} 
+    {% if user.is_authenticated %} 
+    {{ user.first_name }}
+    {{ user.last_name }}
+    <h1> you are logged in : Hi {{ user.username }}! </h1>
+            <p><a href="{% url 'customer' %}">customer</a></p>
+            <p><a href="{% url 'manager' %}">manager</a></p>
+            <p><a href="{% url 'address' %}">address</a></p>
+            <p><a href="{% url 'restaurant' %}">restaurant</a></p>
+            <p><a href="{% url 'branch' %}">branch</a></p>
+            <p><a href="{% url 'food' %}">food</a></p>
+            <p><a href="{% url 'categorymeel' %}">categorymeel</a></p>
+            <p><a href="{% url 'categoryfood' %}">categoryfood</a></p>
+            <p><a href="{% url 'menu' %}">menu</a></p>
+            <p><a href="{% url 'orderitem' %}">orderitem</a></p>
+            <p><a href="{% url 'order' %}">order</a></p>
+
+        {% comment %} Hi {{ user.username }}!  You are {{ user.age }} years old.  {% endcomment %}
+        <p><a href="{% url 'logout' %}">Log Out</a></p>
+    {% else %}
+        {{ user }}
+        <p>You are not logged in, Bye</p>
+        <a href="{% url 'login' %}">Log In</a> |
+        <a href="#">Sign Up</a>
+
+
+
+    {% endif %} 
+{% endblock content %}
