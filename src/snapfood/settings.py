@@ -45,14 +45,15 @@ INSTALLED_APPS = [
     # 'allauth', # new
     # 'allauth.account', # new
     # 'allauth.socialaccount',
-
+    'jalali_date',
     'account',
     'store',
+
 ]
 AUTH_USER_MODEL = 'account.CustomUser'
 
 LOGIN_REDIRECT_URL = 'home'
-ACCOUNT_LOGOUT_REDIRECT  = 'home'
+ACCOUNT_LOGOUT_REDIRECT = 'home'
 
 # SITE_ID = 1
 AUTHENTICATION_BACKENDS = (
@@ -162,4 +163,21 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
+}
+
+JALALI_DATE_DEFAULTS = {
+   'Strftime': {
+        'date': '%y/%m/%d',
+        'datetime': '%H:%M:%S _ %y/%m/%d',
+    },
+    'Static': {
+        'js': [
+            'admin/js/django_jalali.min.js',
+        ],
+        'css': {
+            'all': [
+                'admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css',
+            ]
+        }
+    },
 }

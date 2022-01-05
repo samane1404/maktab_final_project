@@ -2,6 +2,7 @@ from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
 from django.shortcuts import render
 from rest_framework import generics
+
 from .forms import LoginForm
 from .models import *
 from .serializer import *
@@ -13,9 +14,7 @@ from django.urls import reverse_lazy
 
 # Create your views
 def home(x):
-    return render(x, 'registration/login.html')
-
-
+    return render(x, 'home.html')
 
 class SignUpView(generics.CreateAPIView):
     form_class = UserCreationForm
@@ -25,14 +24,14 @@ class SignUpView(generics.CreateAPIView):
 class CustomerList(generics.ListCreateAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [IsCurrentUserOwnerOrReadOnly]
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
 class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [IsCurrentUserOwnerOrReadOnly]
     def perform_update(self, serializer):
         serializer.save(owner=self.request.user)
     def perform_desrtoy(self, serializer):
@@ -41,14 +40,14 @@ class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):
 class ManagerList(generics.ListCreateAPIView):
     queryset = Manager.objects.all()
     serializer_class = ManagerSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [IsCurrentUserOwnerOrReadOnly]
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
 class ManagerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Manager.objects.all()
     serializer_class = ManagerSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [IsCurrentUserOwnerOrReadOnly]
     def perform_update(self, serializer):
         serializer.save(owner=self.request.user)
     def perform_desrtoy(self, serializer):
@@ -57,14 +56,14 @@ class ManagerDetail(generics.RetrieveUpdateDestroyAPIView):
 class AddressList(generics.ListCreateAPIView):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [IsCurrentUserOwnerOrReadOnly]
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
 class AddressDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [IsCurrentUserOwnerOrReadOnly]
     def perform_update(self, serializer):
         serializer.save(owner=self.request.user)
     def perform_desrtoy(self, serializer):

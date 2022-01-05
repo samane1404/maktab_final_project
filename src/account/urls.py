@@ -1,6 +1,5 @@
 from django.urls import path, include
 from .views import *
-from viewss import *
 
 
 urlpatterns = [
@@ -12,4 +11,5 @@ urlpatterns = [
     path('manager/<int:pk>', ManagerDetail.as_view()),
     path('address/', AddressList.as_view(), name='address'),
     path('address/<int:pk>', AddressDetail.as_view()),
+
 ]

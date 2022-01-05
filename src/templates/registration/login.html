@@ -6,14 +6,22 @@
     <div class="container">
         <br>
         <br>
-        
+
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Log In</button>
         </form>
-
+        <br>
+        <br>
+            <p><a href="{% url 'restaurants' %}">restaurant</a></p>
+            <p><a href="{% url 'branchs' %}">branch</a></p>
+            <p><a href="{% url 'foods' %}">food</a></p>
+            <p><a href="{% url 'categorymeels' %}">categorymeel</a></p>
+            <p><a href="{% url 'categoryfoods' %}">categoryfood</a></p>
+            <p><a href="{% url 'menus' %}">menu</a></p>
     </div>
+
 
 {% endblock content %}
 

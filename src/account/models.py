@@ -18,6 +18,16 @@ class Customer(CustomUser):
     class Meta:
         proxy = True
 
+
+class Manager(CustomUser):
+    class Meta:
+        proxy = True
+
+
+class Admin(CustomUser):
+    class Meta:
+        proxy = True
+
     # def save(self, *arg, **kwarg):
     #     if self.id:
     #         pass
@@ -26,11 +36,6 @@ class Customer(CustomUser):
     #         self.is_staff = False
     #     return super(Customer, self).save(*arg, **kwarg)
 
-
-class Manager(CustomUser):
-    class Meta:
-        proxy = True
-
     # def save(self, *arg, **kwarg):
     #     if self.id:
     #         pass
@@ -38,11 +43,6 @@ class Manager(CustomUser):
     #         self.is_superuser = False
     #         self.is_staff = True
     #     return super(Manager, self).save(*arg, **kwarg)
-
-
-class Admin(CustomUser):
-    class Meta:
-        proxy = True
 
     # def save(self, *arg, **kwarg):
     #     if self.id:

@@ -1,5 +1,6 @@
 from django.urls import path, include
 from .views import *
+from .viewss import *
 
 
 urlpatterns = [
@@ -19,4 +20,17 @@ urlpatterns = [
     path('orderitem/<int:pk>', OrderItemDetail.as_view()),
     path('order/', OrderList.as_view(), name='order'),
     path('order/<int:pk>', OrderDetail.as_view()),
+    path('restaurants/', RestaurantLists.as_view(), name='restaurants'),
+    path('restaurants/<int:pk>', RestaurantDetails.as_view()),
+    path('branchs/', BranchLists.as_view(), name='branchs'),
+    path('branchs/<int:pk>', BranchDetails.as_view()),
+    path('foods/', FoodLists.as_view(), name='foods'),
+    path('foods/<int:pk>', FoodDetails.as_view()),
+    path('categorymeels/', CategoryMeelLists.as_view(), name='categorymeels'),
+    path('categorymeels/<int:pk>', CategoryMeelDetails.as_view()),
+    path('categoryfoods/', CategoryFoodLists.as_view(), name='categoryfoods'),
+    path('categoryfoods/<int:pk>', CategoryFoodDetails.as_view()),
+    path('menus/', MenuLists.as_view(), name='menus'),
+    path('menus/<int:pk>', MenuDetails.as_view()),
+
 ]
