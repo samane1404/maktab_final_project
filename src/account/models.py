@@ -1,55 +1,50 @@
-from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 
-User = settings.AUTH_USER_MODEL
+from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
 class CustomUser(AbstractUser):
-    # id = models.AutoField(primary_key=True)
-    email = models.EmailField(unique=True)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    id = models.AutoField(primary_key=True)
+    # username = models.CharField(max_length=20)
+    # email = models.EmailField(unique=True)
+
+    # USERNAME_FIELD = 'email'
+    # REQUIRED_FIELDS = []
+
 
     def __str__(self):
         return self.username
 
 
 class Customer(CustomUser):
+    # address = models.ManyToManyField('Address')
     class Meta:
         proxy = True
+    def save(self, *arg, **kwarg):
+        if not self.id:
+            self.is_superuser = False
+            self.is_staff = False
+        return super(Customer, self).save(*arg, **kwarg)
 
 
 class Manager(CustomUser):
     class Meta:
         proxy = True
+    def save(self, *arg, **kwarg):
+        if not self.id:
+            self.is_superuser = False
+            self.is_staff = True
+        return super(Manager, self).save(*arg, **kwarg)
 
 
 class Admin(CustomUser):
     class Meta:
         proxy = True
-
-    # def save(self, *arg, **kwarg):
-    #     if self.id:
-    #         pass
-    #     else:
-    #         self.is_superuser = False
-    #         self.is_staff = False
-    #     return super(Customer, self).save(*arg, **kwarg)
-
-    # def save(self, *arg, **kwarg):
-    #     if self.id:
-    #         pass
-    #     else:
-    #         self.is_superuser = False
-    #         self.is_staff = True
-    #     return super(Manager, self).save(*arg, **kwarg)
-
-    # def save(self, *arg, **kwarg):
-    #     if self.id:
-    #         pass
-    #     else:
-    #         self.is_superuser = True
-    #     return super(Admin, self).save(*arg, **kwarg)
+    def save(self, *arg, **kwarg):
+        if not self.id:
+            self.is_superuser = True
+        return super(Admin, self).save(*arg, **kwarg)
 
 
 class Address(models.Model):
@@ -57,8 +52,8 @@ class Address(models.Model):
     address = models.TextField(max_length=300)
     main = models.BooleanField()
     postal_code = models.IntegerField()
+    customer = models.ManyToManyField(Customer)
     created_time = models.DateTimeField(auto_now_add=True)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.city

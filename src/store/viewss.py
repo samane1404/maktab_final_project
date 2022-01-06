@@ -8,84 +8,66 @@ from .permission import *
 
 
 # Create your views here.
-class RestaurantLists(generics.ListCreateAPIView):
+class RestaurantLists(generics.ListAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
 
 
-class RestaurantDetails(generics.RetrieveUpdateDestroyAPIView):
+class RestaurantDetails(generics.RetrieveAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
 
 
-class BranchLists(generics.ListCreateAPIView):
+class BranchLists(generics.ListAPIView):
     queryset = Branch.objects.all()
     serializer_class = BranchSerializer
 
 
-class BranchDetails(generics.RetrieveUpdateDestroyAPIView):
+class BranchDetails(generics.RetrieveAPIView):
     queryset = Branch.objects.all()
     serializer_class = BranchSerializer
 
 
-class FoodLists(generics.ListCreateAPIView):
+class FoodLists(generics.ListAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
 
 
-class FoodDetails(generics.RetrieveUpdateDestroyAPIView):
+class FoodDetails(generics.RetrieveAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
 
 
-class CategoryMeelLists(generics.ListCreateAPIView):
+class CategoryMeelLists(generics.ListAPIView):
     queryset = CategoryMeel.objects.all()
     serializer_class = CategoryMeelSerializer
 
 
-class CategoryMeelDetails(generics.RetrieveUpdateDestroyAPIView):
+class CategoryMeelDetails(generics.RetrieveAPIView):
     queryset = CategoryMeel.objects.all()
     serializer_class = CategoryMeelSerializer
 
 
-class CategoryFoodLists(generics.ListCreateAPIView):
+class CategoryFoodLists(generics.ListAPIView):
     queryset = CategoryFood.objects.all()
     serializer_class = CategoryFoodSerializer
 
 
-class CategoryFoodDetails(generics.RetrieveUpdateDestroyAPIView):
+class CategoryFoodDetails(generics.RetrieveAPIView):
     queryset = CategoryFood.objects.all()
     serializer_class = CategoryFoodSerializer
 
 
-class MenuLists(generics.ListCreateAPIView):
+class MenuLists(generics.ListAPIView):
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
 
 
-class MenuDetails(generics.RetrieveUpdateDestroyAPIView):
+class MenuDetails(generics.RetrieveAPIView):
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
 
 
-class OrderItemLists(generics.ListCreateAPIView):
-    queryset = OrderItem.objects.all()
-    serializer_class = OrderItemSerializer
-
-
-class OrderItemDetails(generics.RetrieveUpdateDestroyAPIView):
-    queryset = OrderItem.objects.all()
-    serializer_class = OrderItemSerializer
-
-
-class OrderLists(generics.ListCreateAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-
-
-class OrderDetails(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
 
 
 

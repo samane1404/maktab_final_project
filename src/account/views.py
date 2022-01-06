@@ -13,7 +13,7 @@ from django.urls import reverse_lazy
 
 # Create your views
 def home(x):
-    return render(x, 'registration/login.html')
+    return render(x, 'home.html')
 
 
 

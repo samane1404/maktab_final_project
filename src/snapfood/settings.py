@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%3v*1w!m0^ke=v7n0=8(4o+=ua&s_2fvlt=i=@f4bnet!2068v'
+SECRET_KEY = 'django-insecure-exsznfn5*a0upnyg$ia$$x+v*wfh9zhjwu)#voo2!h*b_sg-x0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,18 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'django.contrib.sites',
     'rest_framework',
-    # 'django.contrib.sites',
-
-    # 'crispy_forms', 
-    # 'allauth', # new
-    # 'allauth.account', # new
-    # 'allauth.socialaccount',
-    'jalali_date',
     'account',
     'store',
-
 ]
 AUTH_USER_MODEL = 'account.CustomUser'
 
@@ -60,22 +51,12 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     # 'account.backends.EmailAuth',
 )
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
-
-# ACCOUNT_SESSION_REMEMBER = True 
-# ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False 
-# ACCOUNT_USERNAME_REQUIRED = False
-# ACCOUNT_AUTHENTICATION_METHOD = 'email' 
-# ACCOUNT_EMAIL_REQUIRED = True 
-# ACCOUNT_UNIQUE_EMAIL = True 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # 'ai.middleware.current_user.CurrentUserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -106,11 +87,15 @@ WSGI_APPLICATION = 'snapfood.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'project',
+        'USER': 'andromeda',
+        'PASSWORD': '012975',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
-
+print(DATABASES)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -154,30 +139,3 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# LINK_MODEL = 'account.Customer'
-
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
-}
-
-JALALI_DATE_DEFAULTS = {
-   'Strftime': {
-        'date': '%y/%m/%d',
-        'datetime': '%H:%M:%S _ %y/%m/%d',
-    },
-    'Static': {
-        'js': [
-            'admin/js/django_jalali.min.js',
-        ],
-        'css': {
-            'all': [
-                'admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css',
-            ]
-        }
-    },
-}
