@@ -1,20 +1,25 @@
+from profile import Profile
+
 from django.db import models
 
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, User
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class CustomUser(AbstractUser):
     id = models.AutoField(primary_key=True)
-    # username = models.CharField(max_length=20)
-    # email = models.EmailField(unique=True)
+    username = models.CharField(max_length=30, null=True, blank=True)
+    email = models.EmailField(unique=True)
 
     # USERNAME_FIELD = 'email'
-    # REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = []
+
 
 
     def __str__(self):
-        return self.username
+        return self.email
 
 
 class Customer(CustomUser):
@@ -26,6 +31,7 @@ class Customer(CustomUser):
             self.is_superuser = False
             self.is_staff = False
         return super(Customer, self).save(*arg, **kwarg)
+
 
 
 class Manager(CustomUser):

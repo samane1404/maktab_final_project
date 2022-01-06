@@ -9,8 +9,8 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_display = ('email', 'is_staff', 'is_active',)
-    list_filter = ('email', 'is_staff', 'is_active',)
+    list_display = ('email', 'is_superuser', 'is_staff', 'is_active',)
+    list_filter = ('email', 'is_superuser', 'is_staff', 'is_active',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
@@ -32,8 +32,8 @@ class CustomerAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_display = ('email', 'is_staff', 'is_active',)
-    list_filter = ('email', 'is_staff', 'is_active',)
+    list_display = ('email', 'is_superuser', 'is_staff', 'is_active',)
+    list_filter = ('email', 'is_superuser', 'is_staff', 'is_active',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
@@ -54,8 +54,8 @@ class ManagerAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_display = ('email', 'is_staff', 'is_active',)
-    list_filter = ('email', 'is_staff', 'is_active',)
+    list_display = ('email', 'is_superuser', 'is_staff', 'is_active',)
+    list_filter = ('email', 'is_superuser', 'is_staff', 'is_active',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
@@ -77,8 +77,8 @@ class AdminAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_display = ('email', 'is_staff', 'is_active',)
-    list_filter = ('email', 'is_staff', 'is_active',)
+    list_display = ('email', 'is_superuser', 'is_staff', 'is_active',)
+    list_filter = ('email', 'is_superuser', 'is_staff', 'is_active',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
@@ -94,4 +94,10 @@ class AdminAdmin(UserAdmin):
 
 
 admin.site.register(Admin, AdminAdmin)
-admin.site.register(Address)
+@admin.register(Address)
+class RegisterAdmin(admin.ModelAdmin):
+    list_display = ['city', 'main', 'postal_code']
+    list_display_links = ['postal_code']
+    list_filter = ['city', 'main']
+    list_per_page = 10
+    search_fields = ['city']

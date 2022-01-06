@@ -19,8 +19,8 @@ class Branch(models.Model):
     address = models.TextField(max_length=300)
     main = models.BooleanField()
     description = models.TextField(max_length=300)
-    restaurant_id = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    category_food_id = models.ForeignKey('CategoryFood', on_delete=models.CASCADE)
+    restaurant_id = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='branch_set')
+    category_food_id = models.ForeignKey('CategoryFood', on_delete=models.CASCADE, related_name='branch_set1')
     manager_id = models.OneToOneField('account.Manager', primary_key=True, on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
 
@@ -35,7 +35,7 @@ class Food(models.Model):
     name = models.CharField(max_length=30, blank=True, null=True)
     description = models.TextField(max_length=300)
     image = models.ImageField()
-    category_food_id = models.ForeignKey('CategoryFood', on_delete=models.CASCADE)
+    category_food_id = models.ForeignKey('CategoryFood', on_delete=models.CASCADE, related_name='food_set')
     category_meel_id = models.ManyToManyField('CategoryMeel')
     created_time = models.DateTimeField(auto_now_add=True)
 
@@ -71,8 +71,8 @@ class CategoryFood(models.Model):
 class Menu(models.Model):
     price = models.IntegerField()
     quantity = models.IntegerField()
-    food_id = models.ForeignKey(Food, on_delete=models.CASCADE)
-    branch_id = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    food_id = models.ForeignKey(Food, on_delete=models.CASCADE, related_name='menu_set')
+    branch_id = models.ForeignKey(Branch, on_delete=models.CASCADE, related_name='menu_sett')
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

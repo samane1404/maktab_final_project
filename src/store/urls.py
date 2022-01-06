@@ -30,7 +30,5 @@ urlpatterns = [
     path('categorymeels/<int:pk>', CategoryMeelDetails.as_view()),
     path('categoryfoods/', CategoryFoodLists.as_view(), name='categoryfoods'),
     path('categoryfoods/<int:pk>', CategoryFoodDetails.as_view()),
-    path('menus/', MenuLists.as_view(), name='menus'),
-    path('menus/<int:pk>', MenuDetails.as_view()),
 
 ]
