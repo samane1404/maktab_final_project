@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'store',
 ]
 AUTH_USER_MODEL = 'account.CustomUser'
-
 LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
 
 # SITE_ID = 1

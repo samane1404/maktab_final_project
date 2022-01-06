@@ -19,9 +19,9 @@ class Branch(models.Model):
     address = models.TextField(max_length=300)
     main = models.BooleanField()
     description = models.TextField(max_length=300)
-    restaurant_id = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='branch_set')
-    category_food_id = models.ForeignKey('CategoryFood', on_delete=models.CASCADE, related_name='branch_set1')
-    manager_id = models.OneToOneField('account.Manager', primary_key=True, on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='branch_set')
+    category_food = models.ForeignKey('CategoryFood', on_delete=models.CASCADE, related_name='branch_set1')
+    manager = models.OneToOneField('account.Manager', primary_key=True, on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -35,8 +35,8 @@ class Food(models.Model):
     name = models.CharField(max_length=30, blank=True, null=True)
     description = models.TextField(max_length=300)
     image = models.ImageField()
-    category_food_id = models.ForeignKey('CategoryFood', on_delete=models.CASCADE, related_name='food_set')
-    category_meel_id = models.ManyToManyField('CategoryMeel')
+    category_food = models.ForeignKey('CategoryFood', on_delete=models.CASCADE, related_name='food_set')
+    category_meel = models.ManyToManyField('CategoryMeel')
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -71,12 +71,12 @@ class CategoryFood(models.Model):
 class Menu(models.Model):
     price = models.IntegerField()
     quantity = models.IntegerField()
-    food_id = models.ForeignKey(Food, on_delete=models.CASCADE, related_name='menu_set')
-    branch_id = models.ForeignKey(Branch, on_delete=models.CASCADE, related_name='menu_sett')
+    food = models.ForeignKey(Food, on_delete=models.CASCADE, related_name='menu_set')
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, related_name='menu_sett')
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.food_id)
+        return str(self.food)
 
     class Meta:
         ordering = ['created_time']
@@ -85,8 +85,8 @@ class Menu(models.Model):
 class OrderItem(models.Model):
     STATUS = (("order", "order"), ("registration", "registration"), ("sent", "sent"), ("delivery", "delivery"))
     quantity = models.IntegerField()
-    menu_id = models.ManyToManyField(Menu, related_name='orderitem_set')
-    order_id = models.ForeignKey('Order', on_delete=models.CASCADE)
+    menu = models.ManyToManyField(Menu, related_name='orderitem_set')
+    order = models.ForeignKey('Order', on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS, default='order')
     created_time = models.DateTimeField(auto_now_add=True)
 
@@ -98,11 +98,11 @@ class OrderItem(models.Model):
 
 
 class Order(models.Model):
-    customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.customer_id)
+        return str(self.customer)
 
     class Meta:
         ordering = ['created_time']
