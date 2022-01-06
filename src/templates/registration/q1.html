@@ -5,6 +5,26 @@
     <title>Title</title>
 </head>
 <body>
+<script type="text/javascript">
+    function q1(event) {
+        event.preventDefault();
+        var data = {
+           result : result
+        }
+        $.ajax({
+            type: "GET",
+            url: "{% url 'q1' %}",
+            data: data,
+            success: function(data) {
+              console.log(data.queryset)
+            },
 
+            error: function(response, error) {
+                alert(error);
+            }
+        });
+    };
+</script>
+{{res}}
 </body>
 </html>

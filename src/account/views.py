@@ -18,7 +18,6 @@ jalili_date = jdatetime.date.fromgregorian(day=19, month=5, year=2017)
 def home(x):
     return render(x, 'home.html')
 
-
 class SignUpView(generics.CreateAPIView):
     form_class = UserCreationForm
     success_url = reverse_lazy('login')

@@ -140,16 +140,16 @@ class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 
-def q1(x):
-    a = Food.objects.all().filter(menu_set__orderitem_set__status='registration')
-    aa = {
-        'a' : a
-    }
-    print(aa)
-    t = JsonResponse({
-                'name':list(a.values_list('name', flat=True))
-            })
-    return t
+# def q1(x):
+#     a = Food.objects.all().filter(menu_set__orderitem_set__status='registration')
+#     aa = {
+#         'a' : a
+#     }
+#     print(aa)
+#     t = JsonResponse({
+#                 'name':list(a.values_list('name', flat=True))
+#             })
+#     return t
 def q2(x):
     a = Branch.objects.all().filter(menu_sett__orderitem_set__status='registration')
     aa = {
@@ -170,3 +170,16 @@ def q3(x):
                 'name':list(a.values_list('name', flat=True))
             })
     return t
+
+
+
+
+def q1(req):
+    a = Food.objects.filter(menu_set__orderitem_set__status='registration')
+    if req.method == "GET" and req.is_ajax:
+        result = a.all()[0]
+        data = {
+            'res': result
+        }
+        print(data)
+        return render(req, 'registration/q1.html', data)
