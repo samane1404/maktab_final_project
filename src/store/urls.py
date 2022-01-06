@@ -30,5 +30,7 @@ urlpatterns = [
     path('categorymeels/<int:pk>', CategoryMeelDetails.as_view()),
     path('categoryfoods/', CategoryFoodLists.as_view(), name='categoryfoods'),
     path('categoryfoods/<int:pk>', CategoryFoodDetails.as_view()),
-
+    path('registration/q1.html/', q1, name='q1'),
+    path('registration/q2.html/', q2, name='q2'),
+    path('registration/q3.html/', q3, name='q3'),
 ]

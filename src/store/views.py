@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework import generics
 from .models import *
@@ -137,3 +138,35 @@ class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
         serializer.save(owner=self.request.user)
 
 
+
+
+def q1(x):
+    a = Food.objects.all().filter(menu_set__orderitem_set__status='registration')
+    aa = {
+        'a' : a
+    }
+    print(aa)
+    t = JsonResponse({
+                'name':list(a.values_list('name', flat=True))
+            })
+    return t
+def q2(x):
+    a = Branch.objects.all().filter(menu_sett__orderitem_set__status='registration')
+    aa = {
+        'a' : a
+    }
+    print(aa)
+    t = JsonResponse({
+                'name':list(a.values_list('name', flat=True))
+            })
+    return t
+def q3(x):
+    a = Restaurant.objects.all().filter(branch_set__menu_sett__orderitem_set__status='registration')
+    aa = {
+        'a' : a
+    }
+    print(aa)
+    t = JsonResponse({
+                'name':list(a.values_list('name', flat=True))
+            })
+    return t

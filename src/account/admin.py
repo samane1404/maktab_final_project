@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from rest_framework.fields import JSONField
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import *
@@ -101,3 +102,4 @@ class RegisterAdmin(admin.ModelAdmin):
     list_filter = ['city', 'main']
     list_per_page = 10
     search_fields = ['city']
+
