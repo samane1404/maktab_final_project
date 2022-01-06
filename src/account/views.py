@@ -8,6 +8,12 @@ from .forms import LoginForm
 from .permission import *
 from .serializer import *
 
+import jdatetime
+
+gregorian_date = jdatetime.date(1396, 2, 30).togregorian()
+jalili_date = jdatetime.date.fromgregorian(day=19, month=5, year=2017)
+
+
 
 def home(x):
     return render(x, 'home.html')

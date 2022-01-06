@@ -22,3 +22,24 @@ class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = '__all__'
+
+
+from django_jalali.serializers.serializerfield import JDateField, JDateTimeField
+from rest_framework.serializers import ModelSerializer
+
+from .models import Bar, BarTime
+
+
+class JDateFieldSerialializer(ModelSerializer):
+    date = JDateField()
+
+    class Meta:
+        model = Bar
+        exclude = []
+
+class JDateTimeFieldSerializer(ModelSerializer):
+    datetime = JDateTimeField()
+
+    class Meta:
+        model = BarTime
+        exclude = []

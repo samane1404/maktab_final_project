@@ -67,7 +67,9 @@ class MenuDetails(generics.RetrieveAPIView):
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
 
-
+import jdatetime
+gregorian_date = jdatetime.date(1396,2,30).togregorian()
+jalili_date =  jdatetime.date.fromgregorian(day=19,month=5,year=2017)
 
 
 
