@@ -12,12 +12,18 @@ def list(req):
     context ={
         'object_list':re,
     }
-    return render(req, 'todo/homework_list.html', context)
+    return render(req, 'home.html', context)
 
 class Home(ListView):
     model = Menu
     template_name = "home.html"
     queryset = Menu.objects.order_by("created_time")
+
+
+class HomeDetail(DetailView):
+    model = Food
+    template_name = "store/food_details.html"
+    queryset = Food.objects.all()
 
 
 class RestaurantList(generics.ListCreateAPIView):

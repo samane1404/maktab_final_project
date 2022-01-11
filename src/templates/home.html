@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block title %} Home Page {% endblock title%}
 {% block content %}
+{% load static %}
+
     <div>
         <p class="lead">
             <center>
@@ -28,14 +30,14 @@
                 <tr>
                     <th scope="row">{{forloop.counter}}</th>
                     <th >
-                    <img src="{{re.image}}" alt="" style="height:200px" class="img-fluid img-responsive">
+                    <img src="{{re.image.url}}" alt="" style="height:200px" class="img-fluid img-responsive">
                     </th>
                     <th >{{re.food}}</th>
                     <th >{{re.price}}</th>
                     <th >{{re.quantity}}</th>
                     <th >{{re.branch}}</th>
                     <th>
-                        <a href="#" class="btn btn-danger">view</a>
+                        <a href="{% url 'fooddetails' re.pk %}" class="btn btn-danger">view</a>
                     </th>
                 </tr>
                 {% endfor %}
