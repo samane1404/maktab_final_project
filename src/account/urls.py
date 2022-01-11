@@ -1,15 +1,21 @@
-from django.urls import path, include
+from django.urls import path
 from .views import *
-
+from django.contrib.auth import views as auth_views
+from .views import CustomLoginView
+from .forms import LoginForm
 
 urlpatterns = [
-    path('', home, name='home'),
-    path('signup', SignUpView.as_view(), name='signup'),
-    path('customer/', CustomerList.as_view(), name='customer'),
-    path('customer/<int:pk>', CustomerDetail.as_view()),
-    path('manager/', ManagerList.as_view(), name='manager'),
-    path('manager/<int:pk>', ManagerDetail.as_view()),
-    path('address/', AddressList.as_view(), name='address'),
-    path('address/<int:pk>', AddressDetail.as_view()),
-
+    path('', home, name='users-home'),
+    path('profile_admin/', admin, name='profile_admin'),
+    path('profile_manager/', manager, name='profile_manager'),
+    path('register/', RegisterView.as_view(), name='users-register'),
+    path('register_manager/', RegisterView1.as_view(), name='manager-register'),
+    path('login/', CustomLoginView.as_view(redirect_authenticated_user=True, template_name='account/login.html',
+                                           authentication_form=LoginForm), name='login'),
+    path('login_manager/', CustomLoginView1.as_view(redirect_authenticated_user=True, template_name='account/login_manager.html',
+                                           authentication_form=LoginForm1), name='login_manager'),
+    path('login_admin/', CustomLoginView.as_view(redirect_authenticated_user=True, template_name='account/login_admin.html',
+                                           authentication_form=LoginForm), name='login_admin'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='account/logout.html'), name='logout'),
+    path('profile/', profile, name='users-profile'),
 ]

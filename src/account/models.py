@@ -1,25 +1,17 @@
-from profile import Profile
-
 from django.db import models
-
+from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser, User
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from PIL import Image
 
 
 class CustomUser(AbstractUser):
     id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=30, null=True, blank=True)
-    email = models.EmailField(unique=True)
-
-    # USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-
-
 
     def __str__(self):
-        return self.email
+        return self.username
 
 
 class Customer(CustomUser):
@@ -67,23 +59,26 @@ class Address(models.Model):
     class Meta:
         ordering = ['created_time']
 
-from django.db import models
-from django_jalali.db import models as jmodels
 
 
-class Bar(models.Model):
-    objects = jmodels.jManager()
-    name = models.CharField(max_length=200)
-    date = jmodels.jDateField()
 
-    def __str__(self):
-        return "%s, %s" % (self.name, self.date)
+class Profile(models.Model):
+    user = models.OneToOneField(Customer, on_delete=models.CASCADE)
 
-
-class BarTime(models.Model):
-    objects = jmodels.jManager()
-    name = models.CharField(max_length=200)
-    datetime = jmodels.jDateTimeField()
+    avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
+    bio = models.TextField()
 
     def __str__(self):
-        return "%s, %s" % (self.name, self.datetime)
+        return self.user.username
+
+    # resizing images
+    def save(self, *args, **kwargs):
+        super().save()
+
+        img = Image.open(self.avatar.path)
+
+        if img.height > 100 or img.width > 100:
+            new_img = (100, 100)
+            img.thumbnail(new_img)
+            img.save(self.avatar.path)
+

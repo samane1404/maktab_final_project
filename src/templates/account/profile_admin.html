@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %} Home Page {% endblock title%}
+{% block content %}
+    <div>
+        <p class="lead">
+            <br>
+            <a href="{% url 'restaurant' %}" class="btn btn-danger">Restaurant List</a>
+            <a href="{% url 'branch' %}" class="btn btn-danger">Branch List</a>
+            <a href="{% url 'food' %}" class="btn btn-danger">Food List</a>
+            <a href="{% url 'categorymeel' %}" class="btn btn-danger">Category Meel List</a>
+            <a href="{% url 'categoryfood' %}" class="btn btn-danger">Category Food List</a>
+            <a href="{% url 'menu' %}" class="btn btn-danger">Menu List</a>
+            <a href="{% url 'orderitem' %}" class="btn btn-danger">Order Item List</a>
+            <a href="{% url 'order' %}" class="btn btn-danger">Order List</a>
+        </p>
+    </div>
+
+{% endblock content %}

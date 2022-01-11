@@ -44,44 +44,25 @@ class RegisterAdmin(admin.ModelAdmin):
 
 @admin.register(Menu)
 class RegisterAdmin(admin.ModelAdmin):
-    list_display = ['food_id', 'price', 'quantity']
-    list_display_links = ['food_id']
-    list_filter = ['food_id']
+    list_display = ['food', 'price', 'quantity']
+    list_display_links = ['food']
+    list_filter = ['food']
     list_per_page = 10
-    search_fields = ['food_id']
+    search_fields = ['food']
 
 @admin.register(OrderItem)
 class RegisterAdmin(admin.ModelAdmin):
-    list_display = ['order_id', 'status']
+    list_display = ['order']
+    list_display_links = ['order']
+    list_filter = ['order']
+    list_per_page = 10
+    search_fields = ['order']
+
+@admin.register(Order)
+class RegisterAdmin(admin.ModelAdmin):
+    list_display = ['customer', 'status']
     list_display_links = ['status']
     list_filter = ['status']
     list_per_page = 10
     search_fields = ['status']
 
-admin.site.register(Order)
-
-from .models import Bar, BarTime
-from django.contrib import admin
-
-from django_jalali.admin.filters import JDateFieldListFilter
-
-# you need import this for adding jalali calander widget
-import django_jalali.admin as jadmin
-
-
-class BarAdmin(admin.ModelAdmin):
-    list_filter = (
-        ('date', JDateFieldListFilter),
-    )
-
-
-admin.site.register(Bar, BarAdmin)
-
-
-class BarTimeAdmin(admin.ModelAdmin):
-    list_filter = (
-        ('datetime', JDateFieldListFilter),
-    )
-
-
-admin.site.register(BarTime, BarTimeAdmin)

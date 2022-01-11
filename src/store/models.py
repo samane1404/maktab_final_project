@@ -1,5 +1,9 @@
 from django.db import models
 from account.models import *
+from PIL import Image
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class Restaurant(models.Model):
@@ -16,9 +20,9 @@ class Restaurant(models.Model):
 class Branch(models.Model):
     name = models.CharField(max_length=30, blank=True, null=True)
     city = models.CharField(max_length=30, blank=True, null=True)
-    address = models.TextField(max_length=300)
-    main = models.BooleanField()
-    description = models.TextField(max_length=300)
+    address = models.TextField(max_length=300, blank=True, null=True)
+    main = models.BooleanField(blank=True, null=True)
+    description = models.TextField(max_length=300, blank=True, null=True)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='branch_set')
     category_food = models.ForeignKey('CategoryFood', on_delete=models.CASCADE, related_name='branch_set1')
     manager = models.OneToOneField('account.Manager', primary_key=True, on_delete=models.CASCADE)
@@ -33,8 +37,7 @@ class Branch(models.Model):
 
 class Food(models.Model):
     name = models.CharField(max_length=30, blank=True, null=True)
-    description = models.TextField(max_length=300)
-    image = models.ImageField()
+    description = models.TextField(max_length=300, blank=True, null=True)
     category_food = models.ForeignKey('CategoryFood', on_delete=models.CASCADE, related_name='food_set')
     category_meel = models.ManyToManyField('CategoryMeel')
     created_time = models.DateTimeField(auto_now_add=True)
@@ -69,10 +72,11 @@ class CategoryFood(models.Model):
 
 
 class Menu(models.Model):
-    price = models.IntegerField()
-    quantity = models.IntegerField()
+    price = models.IntegerField(blank=True, null=True)
+    quantity = models.IntegerField(blank=True, null=True)
     food = models.ForeignKey(Food, on_delete=models.CASCADE, related_name='menu_set')
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, related_name='menu_sett')
+    image = models.ImageField(blank=True, null=True)
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -83,47 +87,43 @@ class Menu(models.Model):
 
 
 class OrderItem(models.Model):
-    STATUS = (("order", "order"), ("registration", "registration"), ("sent", "sent"), ("delivery", "delivery"))
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(blank=True, null=True)
     menu = models.ManyToManyField(Menu, related_name='orderitem_set')
     order = models.ForeignKey('Order', on_delete=models.CASCADE)
-    status = models.CharField(max_length=20, choices=STATUS, default='order')
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.status
+        return self.order
 
     class Meta:
         ordering = ['created_time']
 
 
 class Order(models.Model):
+    STATUS = (("order", "order"), ("registration", "registration"), ("sent", "sent"), ("delivery", "delivery"))
+    status = models.CharField(max_length=20, choices=STATUS, default='order')
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.customer)
+        return str(self.status)
 
     class Meta:
         ordering = ['created_time']
 
-from django.db import models
-from django_jalali.db import models as jmodels
 
 
-class Bar(models.Model):
-    objects = jmodels.jManager()
-    name = models.CharField(max_length=200)
-    date = jmodels.jDateField()
+def save(self, *args, **kwargs):
+    super().save()
 
-    def __str__(self):
-        return "%s, %s" % (self.name, self.date)
+    img = Image.open(self.avatar.path)
 
+    if img.height > 100 or img.width > 100:
+        new_img = (100, 100)
+        img.thumbnail(new_img)
+        img.save(self.avatar.path)
 
-class BarTime(models.Model):
-    objects = jmodels.jManager()
-    name = models.CharField(max_length=200)
-    datetime = jmodels.jDateTimeField()
-
-    def __str__(self):
-        return "%s, %s" % (self.name, self.datetime)
+class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
+    template_name = 'account/change_password.html'
+    success_message = "Successfully Changed Your Password"
+    success_url = reverse_lazy('users-home')
