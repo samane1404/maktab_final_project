@@ -65,8 +65,8 @@ class Address(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(Customer, on_delete=models.CASCADE)
 
-    avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
-    bio = models.TextField()
+    avatar = models.ImageField(default='default.jpg', upload_to='profile_images', blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.user.username

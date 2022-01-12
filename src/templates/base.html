@@ -9,8 +9,19 @@
 
     <!--Font awesome icons -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+{% load static %}
 
+	<script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">
+	</script>
 
+	<script src=
+"https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">
+	</script>
+
+	<link href=
+"http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"
+		rel="stylesheet" type="text/css" />
 
     <title>{% block title %} {% endblock %} </title>
 </head>
@@ -23,9 +34,9 @@
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ml-auto">
+                    <a href="{% url 'search2' %}" class="navbar-brand"><h4 style="color:white;">search</h4></a>
                     {% if user.is_superuser %}
                     <a href="{% url 'profile_admin' %}" class="nav-item nav-link"><h5 style="color:white;">profile</h5></a>
                     <a href="{% url 'logout' %}" class="nav-item nav-link"><h5 style="color:white;">logout</h5></a>

@@ -2,7 +2,9 @@ from itertools import chain
 from operator import attrgetter
 
 from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import render
+from django.template.loader import render_to_string
 from rest_framework import generics, permissions
 from django.views.generic import ListView, DetailView
 from .serializers import *
@@ -22,6 +24,20 @@ def search(request):
     return render(request, 'store/search.html', {'query': query, 'results': results})
 
 
+def search2(request):
+    if request.GET and request.is_ajax():
+        q = request.GET.get('term')
+        print(q)
+        student_object = Food.objects.filter(name__icontains=q)
+        languages = []
+        for r in student_object:
+            languages.append(r.name)
+            print(languages)
+        return JsonResponse(languages, safe=False,)
+    else:
+        return render(request, 'store/search2.html')
+
+
 def list(req):
     re = Menu.objects.all()
     p = Food.objects.all()
@@ -32,6 +48,8 @@ def list(req):
         'menu_sett':b,
     }
     return render(req, 'home.html', context)
+
+
 
 
 def list_restaurant(req):
@@ -241,5 +259,16 @@ class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
     def perform_desrtoy(self, serializer):
         serializer.save(owner=self.request.user)
 
-#-------------------------------------------------------------------------------
 
+def search21(request):
+    results = []
+    if request.method == "GET":
+        query = request.GET.get('search')
+        if query == '':
+            query = 'None'
+        results = Menu.objects.filter(Q(food__name__icontains=query) | Q(quantity__icontains=query)
+                                    | Q(price__icontains=query) | Q(branch__name__icontains=query)
+                                    | Q(branch__restaurant__name__icontains=query)
+                                    | Q(food__category_food__name__icontains=query)
+                                    | Q(food__category_meel__name__icontains=query))
+    return render(request, 'store/seareh2.html', {'query': query, 'results': results})

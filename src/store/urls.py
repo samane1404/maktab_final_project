@@ -8,6 +8,7 @@ urlpatterns = [
     path('best_restaurant/', best_restaurant, name="best_restaurant"),
     path('best_food/', best_food, name="best_food"),
     path('search/', search, name='search'),
+    path('search2/', search2, name='search2'),
     path('restaurant/', RestaurantList.as_view(), name='restaurant'),
     path('restaurant/<int:pk>', RestaurantDetail.as_view()),
     path('branch/', BranchList.as_view(), name='branch'),
@@ -24,6 +25,7 @@ urlpatterns = [
     path('orderitem/<int:pk>', OrderItemDetail.as_view()),
     path('order/', OrderList.as_view(), name='order'),
     path('order/<int:pk>', OrderDetail.as_view()),
+    path('seareh2/', search21, name='seareh2'),
 
 
 ]

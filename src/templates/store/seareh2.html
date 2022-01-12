@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AutoComplete</title>
+	<script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">
+	</script>
+
+	<script src=
+"https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">
+	</script>
+
+	<link href=
+"http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"
+		rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<h1>Welcome to Search</h1>
+
+    <form action="{% url 'seareh2' %}" class="form-inline" method="get">
+
+       <div class="form-group mb-8">
+
+            <h1>{% if type %}{{ type.name }}{% else %}{% endif %}</h1>
+
+       </div>
+
+       <div class="form-group mx-sm-3 mb-2">
+
+        <label for="" class="sr-only">search</label>
+
+        <input name="search" type="" class="form-control" id="tags" placeholder="food, restaurant ...">
+
+        </div>
+
+        <button type="submit" class="btn btn-danger btn-lg mb-2">Search</button>
+
+        {{result}}
+
+   </form>
+
+
+
+{% if query %}
+
+           <h2>
+
+           {% with results.count as total_results %}
+
+           Found {{ total_results }} result{{ total_results|pluralize }}
+
+           {% endwith %}
+
+           </h2>
+
+   {% for c in results %}
+
+  <a href="{{c.get_url}}"><h3>{{c.name}}</h3></a>
+
+  <h5><img src="{{c.image.url}}" alt="" style="height:200px" class="img-fluid img-responsive">
+      {{c.food.name}} / {{c.quantity}} / {{c.price}} / {{c.branch.name}} / {{c.branch.restaurant}}</h5>
+
+
+   {% empty %}
+
+   <h3>No results found.</h3>
+
+   {% endfor %}
+
+  {% endif %}
+
+
+
+
+	<script>
+<!--$( function() {-->
+<!--	var availableTags = [-->
+<!--		{% for language in languages %}-->
+<!--			"{{language.name}}",-->
+<!--		{% endfor %}-->
+<!--	];-->
+<!--	$( "#tags" ).autocomplete({-->
+<!--	source: availableTags-->
+<!--	});-->
+<!--} );-->
+$(document).ready(function () {
+    $('#tags').autocomplete({
+        source: "",
+        minLength: 1,
+        autoFocus: true,
+    });
+});
+</script>
+</body>
+</html>

@@ -1,13 +1,31 @@
-{% extends "base.html" %}
-{% block title %}Logout{% endblock title %}
-{% block content %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1>Welcome to GFG</h1>
 
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <form action="{% url 'result' %}" class="form-inline" method="get">
 
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+       <div class="form-group mb-8">
 
-<br/></br/>
+            <h1>{% if type %}{{ type.name }}{% else %}{% endif %}</h1>
+
+       </div>
+
+       <div class="form-group mx-sm-3 mb-2">
+
+        <label for="" class="sr-only">search</label>
+
+        <input name="search" type="" class="form-control" id="tags" placeholder="food, restaurant ...">
+
+        </div>
+
+        <button type="submit" class="btn btn-danger btn-lg mb-2">Search</button>
+
+   </form>
 
 <div class="container">
 
@@ -51,6 +69,5 @@
 
 </div>
 
-
-
-{% endblock content %}
+</body>
+</html>
