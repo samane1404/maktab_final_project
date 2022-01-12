@@ -1,51 +1,7 @@
 {% extends "base.html" %}
-{% block title %} Home Page {% endblock title%}
+{% block title %}Logout{% endblock title %}
 {% block content %}
 {% load static %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <div>
-        <p class="lead">
-            <center>
-                <img src="https://upserve.com/media/sites/2/restaurant-online-ordering-1100x600.jpg">
-            </center>
-        </p>
-    </div>
-
-<div class="row">
-    <div class="col-md-7">
-            <br>
-            <a href="{% url 'list_restaurant' %}" class="btn btn-danger">Restaurant List</a>
-            <a href="{% url 'list_food' %}" class="btn btn-danger">Food List</a>
-            <a href="#" class="btn btn-danger">The best-selling food</a>
-            <a href="#" class="btn btn-danger">The best-selling restaurant</a>
-        </div>
-    <div class="col-md-5">
-        <br>
-
-    <form action="{% url 'search' %}" class="form-inline" method="get">
-
-       <div class="form-group mb-8">
-
-            <h1>{% if type %}{{ type.name }}{% else %}{% endif %}</h1>
-
-       </div>
-
-       <div class="form-group mx-sm-3 mb-2">
-
-        <label for="" class="sr-only">search</label>
-
-        <input name="search" type="" class="form-control" id="" placeholder="food, restaurant ...">
-
-        </div>
-
-        <button type="submit" class="btn btn-danger btn-lg mb-2">Search</button>
-
-   </form>
-
-    </div>
-</div>
 
 <div class="container mt-5">
         <table class="table table-striped mt-4">
@@ -87,5 +43,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"></script>
+
 
 {% endblock content %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Logout{% endblock title %}
+{% block content %}
+{% load static %}
+
+<div class="container mt-5">
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">number</th>
+                    <th scope="col">image</th>
+                    <th scope="col">name</th>
+                    <th scope="col">description</th>
+                    <th scope="col">created_time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% comment %} {% for re in recipes %} {% endcomment %}
+                {% comment %} {% for re in recipe_list %} {% endcomment %}
+                {% for re in object_list %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <th >
+                    <img src="{{re.image.url}}" alt="" style="height:200px" class="img-fluid img-responsive">
+                    </th>
+                    <th >{{re.food.name}}</th>
+                    <th >{{re.food.description}}</th>
+                    <th >{{re.food.created_time}}</th>
+<!--                    <th>-->
+<!--                        <a href="#" class="btn btn-danger">view</a>-->
+<!--                    </th>-->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
+
+
+{% endblock content %}
