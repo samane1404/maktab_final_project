@@ -91,6 +91,7 @@ class OrderItem(models.Model):
     menu = models.ManyToManyField(Menu, related_name='orderitem_set')
     order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_set')
     created_time = models.DateTimeField(auto_now_add=True)
+    price = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return str(self.order)
