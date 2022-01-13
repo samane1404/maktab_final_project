@@ -36,6 +36,8 @@ class Manager(CustomUser):
         return super(Manager, self).save(*arg, **kwarg)
 
 
+
+
 class Admin(CustomUser):
     class Meta:
         proxy = True
@@ -65,8 +67,8 @@ class Address(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(Customer, on_delete=models.CASCADE)
 
-    avatar = models.ImageField(default='default.jpg', upload_to='profile_images', blank=True, null=True)
-    bio = models.TextField(blank=True, null=True)
+    avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
+    bio = models.TextField()
 
     def __str__(self):
         return self.user.username

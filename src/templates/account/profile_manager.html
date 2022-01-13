@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 {% block title %} Home Page {% endblock title%}
 {% block content %}
-    <div>
-        <p class="lead">
-            <br>
-            <a href="#" class="btn btn-danger">Restaurant List</a>
-        </p>
-    </div>
+<form method="post">
+        {% csrf_token %}
+
+        <input type="submit" value="Save">
+    </form>
 
 {% endblock content %}

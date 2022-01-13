@@ -18,8 +18,8 @@
             <br>
             <a href="{% url 'list_restaurant' %}" class="btn btn-danger">Restaurant List</a>
             <a href="{% url 'list_food' %}" class="btn btn-danger">Food List</a>
-            <a href="#" class="btn btn-danger">The best-selling food</a>
-            <a href="#" class="btn btn-danger">The best-selling restaurant</a>
+            <a href="{% url 'best_food' %}" class="btn btn-danger">The best-selling food</a>
+            <a href="{% url 'best_restaurant' %}" class="btn btn-danger">The best-selling restaurant</a>
         </div>
     <div class="col-md-5">
         <br>
@@ -75,7 +75,11 @@
                     <th >{{re.branch}}/{{re.branch.restaurant}}</th>
                     <th >{{re.food.category_meel.all|join:', '}}</th>
                     <th>
-                        <a href="#" class="btn btn-danger">view</a>
+                        {% if user.is_authenticated and user.is_staff %}
+                        <a href="#" class="btn btn-danger">edit</a>
+                        {% else %}
+                        <a href="#" class="btn btn-danger">order</a>
+                        {% endif %}
                     </th>
                 </tr>
                 {% endfor %}

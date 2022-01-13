@@ -1,4 +1,4 @@
-from django import forms
+from store.models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import *
@@ -185,3 +185,50 @@ class LoginForm1(AuthenticationForm):
     class Meta:
         model = Manager
         fields = ['username', 'password', 'remember_me']
+# -----------------------------------------------------------------------------------
+
+class MenuForm(forms.ModelForm):
+    image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
+    price = forms.CharField(required=True,
+                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+    quantity = forms.CharField(required=True,
+                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Menu
+        fields = ['image', 'price', 'quantity']
+class FoodForm(forms.ModelForm):
+    name = forms.CharField(required=True,
+                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+    description = forms.CharField(required=True,
+                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Menu
+        fields = ['name', 'description']
+
+class CategoryForm(forms.ModelForm):
+    name = forms.CharField(required=True,
+                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Menu
+        fields = ['name']
+
+
+class BranchForm(forms.ModelForm):
+    name = forms.CharField(required=True,
+                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Menu
+        fields = ['name']
+
+
+class RestaurantForm(forms.ModelForm):
+    name = forms.CharField(required=True,
+                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Menu
+        fields = ['name']

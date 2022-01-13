@@ -1,7 +1,7 @@
 from itertools import chain
 from operator import attrgetter
 
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
@@ -77,20 +77,27 @@ def list_food(req):
 
 
 def best_restaurant(req):
-    re = Food.objects.all()
-    context = {
-        'object_list': re,
+    a = Branch.objects.all().filter(menu_sett__orderitem_set__order__status='register').annotate(s=Sum("menu_sett__price"))
+    aa = {
+        'a': a
     }
-    return render(req, 'store/best_restaurant.html', context)
+    print(aa)
+    t = JsonResponse({
+                'name': list(a.values_list('name', flat=True))
+            })
+    return render(req, 'store/best_restaurant.html', aa)
 
 
-def best_food(req):
-    re = Food.objects.all()
-    context = {
-        'object_list': re,
+def best_food(x):
+    a = Food.objects.all().filter(menu_set__orderitem_set__order__status='registration').annotate(s=Sum("menu_set__quantity"))
+    aa = {
+        'a': a
     }
-    return render(req, 'store/best_food.html', context)
-
+    print(aa)
+    t = JsonResponse({
+                'name': list(a.values_list('name', flat=True))
+            })
+    return t
 
 class RestaurantList(generics.ListCreateAPIView):
     queryset = Restaurant.objects.all()

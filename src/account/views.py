@@ -1,4 +1,5 @@
-from .forms import *
+from django.views.generic import CreateView
+from store.models import *
 from django.views import View
 from django.contrib.auth.views import LoginView
 from .forms import RegisterForm, LoginForm
@@ -6,7 +7,7 @@ from django.contrib.auth.views import PasswordResetView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UpdateUserForm, UpdateProfileForm
+from .forms import *
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -130,6 +131,7 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
                       "please make sure you've entered the address you registered with, and check your spam folder."
     success_url = reverse_lazy('users-home')
 
+
 @login_required
 def profile(request):
     return render(request, 'account/profile.html')
@@ -157,3 +159,22 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     template_name = 'account/change_password.html'
     success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('users-home')
+
+
+class ManagerView(SuccessMessageMixin, CreateView):
+    form_class = MenuForm
+    add_form = FoodForm, BranchForm, CategoryForm, RestaurantForm
+    template_name = 'account/profile_manager.html'
+    success_url = reverse_lazy("users-home")
+    success_message = "Your new entry was created!"
+    # def form(self, request):
+    #     context = {
+    #         'restaurant': RestaurantForm(),
+    #         'branch': BranchForm(),
+    #         'category': CategoryForm(),
+    #         'food': FoodForm(),
+    #         'menu': MenuForm(),
+    #     }
+    #     return render(request, 'account/profile_manager.htm', context)
+
+

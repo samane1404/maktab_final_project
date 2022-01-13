@@ -89,11 +89,11 @@ class Menu(models.Model):
 class OrderItem(models.Model):
     quantity = models.IntegerField(blank=True, null=True)
     menu = models.ManyToManyField(Menu, related_name='orderitem_set')
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_set')
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.order
+        return str(self.order)
 
     class Meta:
         ordering = ['created_time']

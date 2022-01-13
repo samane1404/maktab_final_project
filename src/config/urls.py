@@ -25,8 +25,8 @@ from account.views import ChangePasswordView
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
-                  path('a/', include('account.urls')),
                   path('', include('store.urls')),
+                  path('a/', include('account.urls')),
                   path(r'^oauth/', include('social_django.urls', namespace='social')),
                   path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
                   path('password-reset-confirm/<uidb64>/<token>/',
