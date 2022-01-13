@@ -1,12 +1,15 @@
 from itertools import chain
 from operator import attrgetter
 
+from django.urls import reverse
+
+from .forms import *
 from django.db.models import Q, Sum
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from rest_framework import generics, permissions
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from .serializers import *
 
 
@@ -279,3 +282,82 @@ def search21(request):
                                     | Q(food__category_food__name__icontains=query)
                                     | Q(food__category_meel__name__icontains=query))
     return render(request, 'store/seareh2.html', {'query': query, 'results': results})
+
+
+
+def merge_dicts(x, y):
+    """
+    Given two dicts, merge them into a new dict as a shallow copy.
+    """
+    z = x.copy()
+    z.update(y)
+    return z
+class MultipleFormView(TemplateView):
+    """
+    View mixin that handles multiple forms / formsets.
+    After the successful data is inserted ``self.process_forms`` is called.
+    """
+    form_classes = {}
+
+    def get_context_data(self, **kwargs):
+        context = super(MultipleFormView, self).get_context_data(**kwargs)
+        forms_initialized = {name: form(prefix=name)
+                             for name, form in self.form_classes.items()}
+
+        return merge_dicts(context, forms_initialized)
+
+    def post(self, request):
+        forms_initialized = {
+            name: form(prefix=name, data=request.POST)
+            for name, form in self.form_classes.items()}
+
+        valid = all([form_class.is_valid()
+                     for form_class in forms_initialized.values()])
+        if valid:
+            return self.process_forms(forms_initialized)
+        else:
+            context = merge_dicts(self.get_context_data(), forms_initialized)
+            return self.render_to_response(context)
+
+    def process_forms(self, form_instances):
+        raise NotImplemented
+
+
+class MultipleFormsDemoView(MultipleFormView):
+    template_name = "store/profile_managers.html"
+    form_classes = {
+        'restaurant_form': RestaurantForm,
+        'branch_form': BranchForm,
+        'food_form': FoodForm,
+        'menu_form': MenuForm,
+        'categorymeel_form': CategoryMeelForm,
+        'categoryfood_form': CategoryFoodForm,
+                    }
+
+    success_urls = {
+        'restaurant_form': reverse_lazy('users-home'),
+        'branch_form': reverse_lazy('users-home'),
+        'food_form': reverse_lazy('users-home'),
+        'menu_form': reverse_lazy('users-home'),
+        'categorymeel_form': reverse_lazy('users-home'),
+        'categoryfood_form': reverse_lazy('users-home'),
+
+    }
+
+    def get_success_url(self):
+        return reverse('users-home')
+
+    def forms_valid(self, forms):
+        restaurant = forms['restaurant_form'].save(commit=False)
+        branch = forms['branch_form'].save(commit=False)
+        food = forms['food_form'].save(commit=False)
+        menu = forms['menu_form'].save(commit=False)
+        categorymeel = forms['categorymeel_form'].save(commit=False)
+        categoryfood = forms['categoryfood_form'].save(commit=False)
+
+        return super(MultipleFormsDemoView, self).forms_valid(forms)
+
+
+
+
+
