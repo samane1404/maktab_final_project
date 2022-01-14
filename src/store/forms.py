@@ -1,38 +1,52 @@
 from django import forms
 from .models import *
 
+class MultipleForm(forms.Form):
+    action = forms.CharField(max_length=60, widget=forms.HiddenInput())
 
-class RestaurantForm(forms.ModelForm):
+
+class MenuForm(MultipleForm):
+    price = forms.IntegerField()
+    quantity = forms.IntegerField()
+    image = forms.ImageField()
+    created_time = forms.DateField()
     class Meta:
-        model = Restaurant
-        fields = ['name']
+        model = Menu
+        fields = ['price', 'quantity', 'image', 'created_time']
 
 
-class BranchForm(forms.ModelForm):
-    class Meta:
-        model = Branch
-        fields = ['name']
-
-
-class FoodForm(forms.ModelForm):
+class FoodForm(MultipleForm):
+    name = forms.CharField(max_length=50)
+    description = forms.CharField(max_length=300)
     class Meta:
         model = Food
         fields = ['name', 'description']
 
 
-class MenuForm(forms.ModelForm):
+class BranchForm(MultipleForm):
+    name = forms.CharField(max_length=50)
+    main = forms.BooleanField()
     class Meta:
-        model = Menu
-        fields = ['price', 'quantity', 'image']
+        model = Branch
+        fields = ['name', 'main']
 
 
-class CategoryMeelForm(forms.ModelForm):
+class RestaurantForm(MultipleForm):
+    name = forms.CharField(max_length=50)
+    class Meta:
+        model = Restaurant
+        fields = ['name']
+
+
+class CategoryMeelForm(MultipleForm):
+    name = forms.CharField(max_length=50)
     class Meta:
         model = CategoryMeel
         fields = ['name']
 
 
-class CategoryFoodForm(forms.ModelForm):
+class CategoryFoodForm(MultipleForm):
+    name = forms.CharField(max_length=50)
     class Meta:
         model = CategoryFood
         fields = ['name']

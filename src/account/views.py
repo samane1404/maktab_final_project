@@ -1,4 +1,7 @@
+from django.template import RequestContext
 from django.views.generic import CreateView
+
+from store.forms import *
 from store.models import *
 from django.views import View
 from django.contrib.auth.views import LoginView
@@ -161,20 +164,38 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     success_url = reverse_lazy('users-home')
 
 
-class ManagerView(SuccessMessageMixin, CreateView):
-    form_class = MenuForm
-    add_form = FoodForm, BranchForm, CategoryForm, RestaurantForm
-    template_name = 'account/profile_manager.html'
-    success_url = reverse_lazy("users-home")
-    success_message = "Your new entry was created!"
-    # def form(self, request):
-    #     context = {
-    #         'restaurant': RestaurantForm(),
-    #         'branch': BranchForm(),
-    #         'category': CategoryForm(),
-    #         'food': FoodForm(),
-    #         'menu': MenuForm(),
-    #     }
-    #     return render(request, 'account/profile_manager.htm', context)
+
+def profile_manager(req):
+    if req.method == 'POST':
+        restaurant_form= RestaurantForm(req.POST)
+        branch_form= BranchForm(req.POST)
+        food_form= FoodForm(req.POST)
+        menu_form= MenuForm(req.POST)
+        categorymeel_form= CategoryMeelForm(req.POST)
+        categoryfood_form= CategoryFoodForm(req.POST)
+        if restaurant_form.is_valid() and branch_form.is_valid() and food_form.is_valid() and menu_form.is_valid() and categorymeel_form.is_valid() and categoryfood_form.is_valid():
+            # restaurant_form.save()
+            # branch_form.save()
+            # food_form.save()
+            # menu_form.save()
+            # categorymeel_form.save()
+            # categoryfood_form.save()
+            return redirect('profile_manager')
+
+    else:
+        restaurant_form= RestaurantForm()
+        branch_form= BranchForm()
+        food_form= FoodForm()
+        menu_form= MenuForm()
+        categorymeel_form= CategoryMeelForm()
+        categoryfood_form= CategoryFoodForm()
+    return render(req, 'store/profile_manager.html', {
+                       'restaurant_form': restaurant_form,
+                        'branch_form': branch_form,
+                        'food_form': food_form,
+                        'menu_form': menu_form,
+                        'categorymeel_form': categorymeel_form,
+                        'categoryfood_form': categoryfood_form,
+            })
 
 

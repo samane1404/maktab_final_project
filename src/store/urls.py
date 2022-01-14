@@ -7,6 +7,7 @@ urlpatterns = [
     path('list_food/', list_food, name="list_food"),
     path('best_restaurant/', best_restaurant, name="best_restaurant"),
     path('best_food/', best_food, name="best_food"),
+    # path('profile_manager/', profile_manager, name="profile_manager"),
     path('search/', search, name='search'),
     path('search2/', search2, name='search2'),
     path('restaurant/', RestaurantList.as_view(), name='restaurant'),

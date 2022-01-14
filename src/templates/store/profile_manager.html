@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} Home Page {% endblock title%}
+{% block content %}
+      <form method="post" action="{% url 'profile_manager' %}">
+         {% csrf_token %}
+        <br>
+         <label><h3>Restaurant</h3></label>
+         {{ restaurant_form }}
+                  <br>
+         <label><h3>Branch</h3></label>
+         {{ branch_form}}
+                  <br>
+          <label><h3>Menu</h3></label>
+         {{ food_form }}
+                  <br>
+                   <label><h3>Food</h3></label>
+         {{ menu_form }}
+                  <br>
+                   <label><h3>Category Meel</h3></label>
+         {{ categorymeel_form }}
+                  <br>
+                   <label><h3>Category Food</h3></label>
+         {{ categoryfood_form }}
+                  <br>
+         <input type="submit" input="submit" value = "add" />
+      </form>
+
+{% endblock content %}
