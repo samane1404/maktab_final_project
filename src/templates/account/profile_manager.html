@@ -1,28 +1,66 @@
 {% extends "base.html" %}
-{% block title %} Home Page {% endblock title%}
+{% block title %}Profile Page{% endblock title %}
 {% block content %}
-      <form method="post" enctype="multipart/form-data">
-         {% csrf_token %}
+{% load static %}
 
-         <label><h3>Restaurant</h3></label>
-         //accessing form 1 from view
-         {{ forms.restaurant_form.as_p }}
-         <label><h3>Branch</h3></label>
-         //accessing form 2 from view
-         {{ forms.branch_form.as_p }}
-                   <label><h3>Menu</h3></label>
-         //accessing form 2 from view
-         {{ forms.menu_form.as_p }}
-                   <label><h3>Food</h3></label>
-         //accessing form 2 from view
-         {{ forms.food_form.as_p }}
-                   <label><h3>Category Meel</h3></label>
-         //accessing form 2 from view
-         {{ forms.categorymeel_form.as_p }}
-                   <label><h3>Category Food</h3></label>
-         //accessing form 2 from view
-         {{ forms.catogoryfood_form.as_p }}
-         <input type="submit" value="submit"/>
-      </form>
+<div class="row my-3 p-3">
+        <img class="rounded-circle account-img" src="{{ user.profile.avatar.url }} " style="cursor: pointer;"/>
+    </div>
+    {% if user_form.errors %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <div id="form_errors">
+                {% for key, value in user_form.errors.items %}
+                    <strong>{{ value }}</strong>
+                {% endfor %}
+            </div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+
+<!--    <div class="form-content">-->
+        <form class="form-horizontal" method="POST" action="">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label class="small mb-1">First_name:</label>
+                            {{ user_form.first_name }}
+                        <label class="small mb-1">Last_name:</label>
+                            {{ user_form.last_name }}
+                        <label class="small mb-1">Username:</label>
+                            {{ user_form.username }}
+                        <label class="small mb-1">Email:</label>
+                            {{ user_form.email }}
+                    </div>
+
+                </div>
+            </div>
+            <br>
+<div class="row">
+    <div class="col-md-12">
+            <br>
+            <a href="{% url 'rest_create' %}" class="btn btn-danger">Add Restaurant</a>
+            <a href="{% url 'branch_create' %}" class="btn btn-danger">Add Branch</a>
+            <a href="{% url 'category1_create' %}" class="btn btn-danger">Add Category Meel</a>
+            <a href="{% url 'category2_create' %}" class="btn btn-danger">Add Category Food</a>
+            <a href="{% url 'menu_create' %}" class="btn btn-danger">Add Menu</a>
+            <a href="{% url 'food_create' %}" class="btn btn-danger">Add Food</a>
+                    <a href="{% url 'orders' %}" class="btn btn-danger">orders</a>
+
+        </div>
+
+</div>
+            <br>
+            <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
+            <button type="reset" class="btn btn-dark btn-lg">Reset</button>
+        </form>
+
+
+<!--    </div>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
 
 {% endblock content %}

@@ -1,3 +1,5 @@
+from django.forms import formset_factory
+
 from store.models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -93,11 +95,23 @@ class UpdateUserForm(forms.ModelForm):
 class UpdateProfileForm(forms.ModelForm):
     avatar = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
     bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
-    address = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 2}))
+    city = forms.CharField(max_length=100,
+                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+    address = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3}))
 
     class Meta:
         model = Profile
-        fields = ['avatar', 'bio', 'address']
+        fields = ['avatar', 'bio', 'city', 'address']
+
+
+class AddressForm(forms.ModelForm):
+    address = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3}))
+
+    class Meta:
+        model = Address
+        fields = ['address']
+
+AddressFormset = formset_factory(AddressForm, extra=1)
 
 
 # --------------------------------------------------------------------------------------
@@ -186,49 +200,3 @@ class LoginForm1(AuthenticationForm):
         model = Manager
         fields = ['username', 'password', 'remember_me']
 # -----------------------------------------------------------------------------------
-#
-# class MenuForm(forms.ModelForm):
-#     image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
-#     price = forms.CharField(required=True,
-#                              widget=forms.TextInput(attrs={'class': 'form-control'}))
-#     quantity = forms.CharField(required=True,
-#                              widget=forms.TextInput(attrs={'class': 'form-control'}))
-#
-#     class Meta:
-#         model = Menu
-#         fields = ['image', 'price', 'quantity']
-# class FoodForm(forms.ModelForm):
-#     name = forms.CharField(required=True,
-#                              widget=forms.TextInput(attrs={'class': 'form-control'}))
-#     description = forms.CharField(required=True,
-#                            widget=forms.TextInput(attrs={'class': 'form-control'}))
-#
-#     class Meta:
-#         model = Menu
-#         fields = ['name', 'description']
-#
-# class CategoryForm(forms.ModelForm):
-#     name = forms.CharField(required=True,
-#                              widget=forms.TextInput(attrs={'class': 'form-control'}))
-#
-#     class Meta:
-#         model = Menu
-#         fields = ['name']
-#
-#
-# class BranchForm(forms.ModelForm):
-#     name = forms.CharField(required=True,
-#                              widget=forms.TextInput(attrs={'class': 'form-control'}))
-#
-#     class Meta:
-#         model = Menu
-#         fields = ['name']
-#
-#
-# class RestaurantForm(forms.ModelForm):
-#     name = forms.CharField(required=True,
-#                              widget=forms.TextInput(attrs={'class': 'form-control'}))
-#
-#     class Meta:
-#         model = Menu
-#         fields = ['name']

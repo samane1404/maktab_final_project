@@ -88,13 +88,16 @@ class Menu(models.Model):
 
 class OrderItem(models.Model):
     quantity = models.IntegerField(blank=True, null=True)
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_set', blank=True, null=True)
     menu = models.ManyToManyField(Menu, related_name='orderitem_set')
-    order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_set')
     created_time = models.DateTimeField(auto_now_add=True)
     price = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return str(self.order)
+        return str(self.quantity)
+
+    def get_total_item_price(self):
+        return self.quantity * self.menu.price
 
     class Meta:
         ordering = ['created_time']

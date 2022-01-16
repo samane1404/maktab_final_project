@@ -8,10 +8,10 @@
             <thead>
                 <tr>
                     <th scope="col">number</th>
-<!--                    <th scope="col">image</th>-->
+                    <th scope="col">quantity</th>
+                    <th scope="col">name</th>
                     <th scope="col">branch</th>
                     <th scope="col">restaurant</th>
-<!--                    <th scope="col">created_time</th>-->
                 </tr>
             </thead>
             <tbody>
@@ -23,9 +23,10 @@
                     <th >
 <!--                    <img src="{{a.image.url}}" alt="" style="height:200px" class="img-fluid img-responsive">-->
                     </th>
+                    <th >{{a.orderitem_set.all|join:', '}}</th>
                     <th >{{a}}</th>
-                    <th >{{a.restaurant}}</th>
-<!--                    <th >{{a.food.created_time}}</th>-->
+                    <th >{{a.branch }}</th>
+                    <th >{{a.branch.restaurant}}</th>
 <!--                    <th>-->
 <!--                        <a href="#" class="btn btn-danger">view</a>-->
 <!--                    </th>-->

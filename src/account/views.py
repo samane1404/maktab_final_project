@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.template import RequestContext
 from django.views.generic import CreateView
 
@@ -52,7 +53,7 @@ class RegisterView(View):
 
 
 class RegisterView1(View):
-    form_class = RegisterForm
+    form_class = RegisterForm1
     initial = {'key': 'value'}
     template_name = 'account/register_manager.html'
 
@@ -135,18 +136,24 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     success_url = reverse_lazy('users-home')
 
 
-@login_required
-def profile(request):
-    return render(request, 'account/profile.html')
+# @login_required
+# def profile(request):
+#     return render(request, 'account/profile.html')
 
 
 @login_required
 def profile(request):
+    # address = Address.objects.get(customer=request.user.id)
+    heading_message = 'Formset Demo'
+    user_form = UpdateUserForm(request.POST, instance=request.user)
+    profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
+    formset = AddressFormset(request.POST)
     if request.method == 'POST':
-        user_form = UpdateUserForm(request.POST, instance=request.user)
-        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
-
-        if user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid() and formset.is_valid():
+            for form in formset:
+                address = form.cleaned_data.get('address')
+                if address:
+                    Address(address=address).save()
             user_form.save()
             profile_form.save()
             messages.success(request, 'Your profile is updated successfully')
@@ -154,8 +161,9 @@ def profile(request):
     else:
         user_form = UpdateUserForm(instance=request.user)
         profile_form = UpdateProfileForm(instance=request.user.profile)
+        formset = AddressFormset(request.GET or None)
 
-    return render(request, 'account/profile.html', {'user_form': user_form, 'profile_form': profile_form})
+    return render(request, 'account/profile.html', {'user_form': user_form, 'profile_form': profile_form, 'formset': formset, 'heading': heading_message})
 
 
 class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
@@ -164,38 +172,16 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     success_url = reverse_lazy('users-home')
 
 
-
-def profile_manager(req):
-    if req.method == 'POST':
-        restaurant_form= RestaurantForm(req.POST)
-        branch_form= BranchForm(req.POST)
-        food_form= FoodForm(req.POST)
-        menu_form= MenuForm(req.POST)
-        categorymeel_form= CategoryMeelForm(req.POST)
-        categoryfood_form= CategoryFoodForm(req.POST)
-        if restaurant_form.is_valid() and branch_form.is_valid() and food_form.is_valid() and menu_form.is_valid() and categorymeel_form.is_valid() and categoryfood_form.is_valid():
-            # restaurant_form.save()
-            # branch_form.save()
-            # food_form.save()
-            # menu_form.save()
-            # categorymeel_form.save()
-            # categoryfood_form.save()
-            return redirect('profile_manager')
-
+@login_required
+def profile_manager(request):
+    user_form = UpdateUserForm(request.POST, instance=request.user)
+    if request.method == 'POST':
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, 'Your profile is updated successfully')
+            return redirect(to='profile_manager')
     else:
-        restaurant_form= RestaurantForm()
-        branch_form= BranchForm()
-        food_form= FoodForm()
-        menu_form= MenuForm()
-        categorymeel_form= CategoryMeelForm()
-        categoryfood_form= CategoryFoodForm()
-    return render(req, 'store/profile_manager.html', {
-                       'restaurant_form': restaurant_form,
-                        'branch_form': branch_form,
-                        'food_form': food_form,
-                        'menu_form': menu_form,
-                        'categorymeel_form': categorymeel_form,
-                        'categoryfood_form': categoryfood_form,
-            })
-
+        user_form = UpdateUserForm(instance=request.user)
+    return render(request, 'account/profile_manager.html',
+                  {'user_form': user_form})
 

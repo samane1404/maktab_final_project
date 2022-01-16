@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Logout{% endblock title %}
+{% block content %}
+{% load static %}
+<span>
+	<h6>for edit enter edit/id</h6>
+	<h6>for del enter del/id</h6>
+</span>
+<div class="main">
+
+	{% for data in dataset %}.
+
+	{{ data.id }}<br/>
+	{{ data.food }}<br/>
+	{{ data.branch }}<br/>
+	<hr/>
+
+	{% endfor %}
+
+</div>
+
+{% endblock content %}

@@ -49,26 +49,29 @@ class Admin(CustomUser):
 
 class Address(models.Model):
     city = models.CharField(max_length=30, blank=True, null=True)
-    address = models.TextField(max_length=300)
-    main = models.BooleanField()
-    postal_code = models.IntegerField()
-    customer = models.ManyToManyField(Customer)
+    address = models.TextField(max_length=300, blank=True, null=True)
+    main = models.BooleanField(blank=True, null=True)
+    postal_code = models.IntegerField(blank=True, null=True)
+    customer = models.ManyToManyField(Customer, blank=True, null=True, related_name='x')
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.city
+        return str(self.address)
 
     class Meta:
         ordering = ['created_time']
 
+    def save(self, *args, **kwargs):
+        super().save()
 
 
 
 class Profile(models.Model):
     user = models.OneToOneField(Customer, on_delete=models.CASCADE)
-
     avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
-    bio = models.TextField()
+    bio = models.TextField(max_length=500, blank=True, null=True)
+    city = models.CharField(max_length=30, blank=True, null=True)
+    address = models.TextField(max_length=300, blank=True, null=True)
 
     def __str__(self):
         return self.user.username

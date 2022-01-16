@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Logout{% endblock title %}
+{% block content %}
+{% load static %}
+<h1>Add Branch</h1>
+<form action="{% url 'branch_create' %}"
+      method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+<button class="button" type="submit">Add</button>
+</form>
+{% endblock content %}

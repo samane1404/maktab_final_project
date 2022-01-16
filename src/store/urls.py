@@ -27,6 +27,14 @@ urlpatterns = [
     path('order/', OrderList.as_view(), name='order'),
     path('order/<int:pk>', OrderDetail.as_view()),
     path('seareh2/', search21, name='seareh2'),
-
-
+    path('rest_create/', rest_create, name='rest_create'),
+    path('category1_create/', category1_create, name='category1_create'),
+    path('category2_create/', category2_create, name='category2_create'),
+    path('branch_create/', branch_create, name='branch_create'),
+    path('menu_create/', menu_create, name='menu_create'),
+    path('food_create/', food_create, name='food_create'),
+    path('edit/<int:pk>/', rest_edit, name='edit'),
+    path('del/<int:pk>/', rest_del, name='del'),
+    path('sss/', list_view, name='views'),
+    path('orders/', orders, name='orders')
 ]

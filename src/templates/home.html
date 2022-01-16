@@ -69,16 +69,16 @@
                     <th >
                     <img src="{{re.image.url}}" alt="" style="height:200px" class="img-fluid img-responsive">
                     </th>
-                    <th >{{re.food.name}}</th>
+                    <th >{{re.food}}</th>
                     <th >{{re.price}}</th>
                     <th >{{re.quantity}}</th>
                     <th >{{re.branch}}/{{re.branch.restaurant}}</th>
                     <th >{{re.food.category_meel.all|join:', '}}</th>
                     <th>
                         {% if user.is_authenticated and user.is_staff %}
-                        <a href="#" class="btn btn-danger">edit</a>
+                        <a href="{% url 'views' %}" class="btn btn-danger">edit</a>
                         {% else %}
-                        <a href="#" class="btn btn-danger">order</a>
+                        <a href="#" class="btn btn-danger">add to cart</a>
                         {% endif %}
                     </th>
                 </tr>

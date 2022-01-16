@@ -52,11 +52,11 @@ class RegisterAdmin(admin.ModelAdmin):
 
 @admin.register(OrderItem)
 class RegisterAdmin(admin.ModelAdmin):
-    list_display = ['order']
-    list_display_links = ['order']
-    list_filter = ['order']
+    list_display = ['quantity']
+    list_display_links = ['quantity']
+    list_filter = ['quantity']
     list_per_page = 10
-    search_fields = ['order']
+    search_fields = ['quantity']
 
 @admin.register(Order)
 class RegisterAdmin(admin.ModelAdmin):
