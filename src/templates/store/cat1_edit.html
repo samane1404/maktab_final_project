@@ -4,12 +4,12 @@
 {% load static %}
 {% if user.is_superuser %}
 
-<h1>Add Branch</h1>
-<form action="{% url 'branch_create' %}"
+<h1>Edit Category</h1>
+<form action="{% url 'cat1_edit' blog.pk %}"
       method="post">
       {% csrf_token %}
       {{ form.as_p }}
-<button class="button" type="submit">Add</button>
+<button class="button" type="submit">Update</button>
 </form>
 {% endif %}
 {% endblock content %}

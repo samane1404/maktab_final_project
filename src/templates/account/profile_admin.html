@@ -1,19 +1,35 @@
 {% extends "base.html" %}
 {% block title %} Home Page {% endblock title%}
 {% block content %}
-    <div>
-        <p class="lead">
-            <br>
-            <a href="{% url 'restaurant' %}" class="btn btn-danger">Restaurant List</a>
-            <a href="{% url 'branch' %}" class="btn btn-danger">Branch List</a>
-            <a href="{% url 'food' %}" class="btn btn-danger">Food List</a>
-            <a href="{% url 'categorymeel' %}" class="btn btn-danger">Category Meel List</a>
-            <a href="{% url 'categoryfood' %}" class="btn btn-danger">Category Food List</a>
-            <a href="{% url 'menu' %}" class="btn btn-danger">Menu List</a>
-            <a href="{% url 'orderitem' %}" class="btn btn-danger">Order Item List</a>
-            <a href="{% url 'order' %}" class="btn btn-danger">Order List</a>
-            <a href="http://127.0.0.1:8000/admin/" class="btn btn-danger">Admin</a>
-        </p>
+{% if user.is_superuser %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<div class="container mt-5">
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th scope="col"><a href="{% url 'list_user' %}" class="btn btn-danger">Customer</a></th>
+                    <th scope="col"><a href="{% url 'list_manager' %}" class="btn btn-danger">Manager</a></th>
+                    <th scope="col"><a href="#" class="btn btn-danger">Profile Customer</a></th>
+                    <th scope="col"><a href="#" class="btn btn-danger">Profile Manager</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="col"><a href="{% url 'list_rest' %}" class="btn btn-danger">Restaurant</a></th>
+                    <th scope="col"><a href="{% url 'list_branch' %}" class="btn btn-danger">Branch</a></th>
+                    <th scope="col"><a href="{% url 'list_meel' %}" class="btn btn-danger">Category Meel</a></th>
+                    <th scope="col"><a href="{% url 'list_foods' %}" class="btn btn-danger">Category Food</a></th>
+                </tr>
+                <tr>
+                    <th scope="col"><a href="{% url 'list_foodss' %}" class="btn btn-danger">Food</a></th>
+                    <th scope="col"><a href="{% url 'list_menu' %}" class="btn btn-danger">Menu</a></th>
+                    <th scope="col"><a href="{% url 'orders' %}" class="btn btn-danger">Order</a></th>
+                    <th scope="col"><a href="#" class="btn btn-danger">Order Item</a></th>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
+{% endif %}
 {% endblock content %}

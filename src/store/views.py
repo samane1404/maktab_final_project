@@ -1,17 +1,8 @@
-from itertools import chain
-from operator import attrgetter
-
-from django.core.serializers import json
-from django.template import RequestContext
-from django.urls import reverse
-
 from .forms import *
 from django.db.models import Q, Sum
-from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.template.loader import render_to_string
 from rest_framework import generics, permissions
-from django.views.generic import ListView, DetailView, TemplateView
 from .serializers import *
 
 
@@ -299,6 +290,43 @@ def rest_create(request):
                       'form': form
                   })
 
+def rest_edit(request, pk=None):
+    blog = get_object_or_404(Restaurant, pk=pk)
+    if request.method == "POST":
+        form = RestaurantForm(request.POST,
+                              instance=blog)
+        if form.is_valid():
+            form.save()
+            return redirect('list_rest')
+    else:
+        form = RestaurantForm(instance=blog)
+
+    return render(request,
+                  'store/rest_edit.html',
+                  {
+                      'form': form,
+                      'blog': blog
+                  })
+
+
+def rest_del(request, pk=None):
+    blog = get_object_or_404(Restaurant, pk=pk)
+    if request.method == "POST":
+        form = RestDeleteForm(request.POST,
+                                    instance=blog)
+        if form.is_valid():
+            blog.delete()
+            return redirect('list_menu')
+    else:
+        form = RestDeleteForm(instance=blog)
+
+    return render(request, 'store/rest_del.html',
+                  {
+                      'form': form,
+                      'blog': blog,
+                  })
+
+
 
 def category1_create(request):
     if request.method == 'POST':
@@ -313,6 +341,43 @@ def category1_create(request):
                   {
                       'form': form
                   })
+
+def cat1_edit(request, pk=None):
+    blog = get_object_or_404(CategoryMeel, pk=pk)
+    if request.method == "POST":
+        form = CategoeyForm1(request.POST,
+                              instance=blog)
+        if form.is_valid():
+            form.save()
+            return redirect('list_meel')
+    else:
+        form = CategoeyForm1(instance=blog)
+
+    return render(request,
+                  'store/cat1_edit.html',
+                  {
+                      'form': form,
+                      'blog': blog
+                  })
+
+
+def cat1_del(request, pk=None):
+    blog = get_object_or_404(CategoryMeel, pk=pk)
+    if request.method == "POST":
+        form = CatMeelDeleteForm(request.POST,
+                                    instance=blog)
+        if form.is_valid():
+            blog.delete()
+            return redirect('list_meel')
+    else:
+        form = CatMeelDeleteForm(instance=blog)
+
+    return render(request, 'store/cat1_del.html',
+                  {
+                      'form': form,
+                      'blog': blog,
+                  })
+
 
 
 def category2_create(request):
@@ -329,6 +394,43 @@ def category2_create(request):
                       'form': form
                   })
 
+def cat2_edit(request, pk=None):
+    blog = get_object_or_404(CategoryFood, pk=pk)
+    if request.method == "POST":
+        form = CategoeyForm2(request.POST,
+                              instance=blog)
+        if form.is_valid():
+            form.save()
+            return redirect('list_foods')
+    else:
+        form = CategoeyForm2(instance=blog)
+
+    return render(request,
+                  'store/cat2_edit.html',
+                  {
+                      'form': form,
+                      'blog': blog
+                  })
+
+
+def cat2_del(request, pk=None):
+    blog = get_object_or_404(CategoryFood, pk=pk)
+    if request.method == "POST":
+        form = CatFoodDeleteForm(request.POST,
+                                    instance=blog)
+        if form.is_valid():
+            blog.delete()
+            return redirect('list_foods')
+    else:
+        form = CatFoodDeleteForm(instance=blog)
+
+    return render(request, 'store/cat2_del.html',
+                  {
+                      'form': form,
+                      'blog': blog,
+                  })
+
+
 
 def branch_create(request):
     if request.method == 'POST':
@@ -343,6 +445,43 @@ def branch_create(request):
                   {
                       'form': form
                   })
+
+def branch_edit(request, pk=None):
+    blog = get_object_or_404(Branch, pk=pk)
+    if request.method == "POST":
+        form = BranchForm(request.POST,
+                              instance=blog)
+        if form.is_valid():
+            form.save()
+            return redirect('list_branch')
+    else:
+        form = BranchForm(instance=blog)
+
+    return render(request,
+                  'store/branch_edit.html',
+                  {
+                      'form': form,
+                      'blog': blog
+                  })
+
+
+def branch_del(request, pk=None):
+    blog = get_object_or_404(Branch, pk=pk)
+    if request.method == "POST":
+        form = BranchDeleteForm(request.POST,
+                                    instance=blog)
+        if form.is_valid():
+            blog.delete()
+            return redirect('list_branch')
+    else:
+        form = BranchDeleteForm(instance=blog)
+
+    return render(request, 'store/branch_del.html',
+                  {
+                      'form': form,
+                      'blog': blog,
+                  })
+
 
 
 def menu_create(request):
@@ -359,6 +498,43 @@ def menu_create(request):
                       'form': form
                   })
 
+def menu_edit(request, pk=None):
+    blog = get_object_or_404(Menu, pk=pk)
+    if request.method == "POST":
+        form = MenuForm(request.POST,
+                              instance=blog)
+        if form.is_valid():
+            form.save()
+            return redirect('list_menu')
+    else:
+        form = MenuForm(instance=blog)
+
+    return render(request,
+                  'store/menu_edit.html',
+                  {
+                      'form': form,
+                      'blog': blog
+                  })
+
+
+def menu_del(request, pk=None):
+    blog = get_object_or_404(Menu, pk=pk)
+    if request.method == "POST":
+        form = MenuDeleteForm(request.POST,
+                                    instance=blog)
+        if form.is_valid():
+            blog.delete()
+            return redirect('list_menu')
+    else:
+        form = MenuDeleteForm(instance=blog)
+
+    return render(request, 'store/menu_del.html',
+                  {
+                      'form': form,
+                      'blog': blog,
+                  })
+
+
 
 def food_create(request):
     if request.method == 'POST':
@@ -374,55 +550,80 @@ def food_create(request):
                       'form': form
                   })
 
-
-def rest_edit(request, pk=None):
-    blog = get_object_or_404(Menu, pk=pk)
+def food_edit(request, pk=None):
+    blog = get_object_or_404(Food, pk=pk)
     if request.method == "POST":
-        form = MenuForm(request.POST,
+        form = FoodForm(request.POST,
                               instance=blog)
         if form.is_valid():
             form.save()
-            return redirect('menu_create')
+            return redirect('list_foodss')
     else:
-        form = MenuForm(instance=blog)
+        form = FoodForm(instance=blog)
 
     return render(request,
-                  'store/rest_edit.html',
+                  'store/food_edit.html',
                   {
                       'form': form,
                       'blog': blog
                   })
 
 
-def rest_del(request, pk=None):
-    blog = get_object_or_404(Menu, pk=pk)
+def food_del(request, pk=None):
+    blog = get_object_or_404(Food, pk=pk)
     if request.method == "POST":
-        form = MenuDeleteForm(request.POST,
+        form = FoodDeleteForm(request.POST,
                                     instance=blog)
         if form.is_valid():
             blog.delete()
-            return redirect('menu_create')
+            return redirect('list_foodss')
     else:
-        form = MenuDeleteForm(instance=blog)
+        form = FoodDeleteForm(instance=blog)
 
-    return render(request, 'store/rest_del.html',
+    return render(request, 'store/food_del.html',
                   {
                       'form': form,
                       'blog': blog,
                   })
 
 
+
+def list_rest(request):
+    context = {"customer": Restaurant.objects.all()}
+    return render(request, "store/list_rest.html", context)
+
+
+def list_branch(request):
+    context = {"customer": Branch.objects.all()}
+    return render(request, "store/list_branch.html", context)
+
+
+def list_meel(request):
+    context = {"customer": CategoryMeel.objects.all()}
+    return render(request, "store/list_meel.html", context)
+
+
+def list_foods(request):
+    context = {"customer": CategoryFood.objects.all()}
+    return render(request, "store/list_foods.html", context)
+
+
+def list_foodss(request):
+    context = {"customer": Food.objects.all()}
+    return render(request, "store/list_foodss.html", context)
+
+
+def list_menu(request):
+    context = {"customer": Menu.objects.all()}
+    return render(request, "store/list_menu.html", context)
+
+
+
+
+
 def list_view(request):
-    # dictionary for initial data with
-    # field names as keys
-    context = {}
-
-    # add the dictionary during initialization
-    context["dataset"] = Menu.objects.all()
-
+    context = {"dataset": Menu.objects.all()}
     return render(request, "store/sss.html", context)
-
-
 
 
 

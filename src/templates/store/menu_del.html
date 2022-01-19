@@ -2,20 +2,26 @@
 {% block title %}Logout{% endblock title %}
 {% block content %}
 {% load static %}
-{% if user.is_superuser %}
+{% if user.is_staff %}
 
-<h1>Delete Restaurant</h1>
-<form action="{% url 'rest_del' blog.pk %}" method="post">
+<h1>Delete Menu</h1>
+<form action="{% url 'menu_del' blog.pk %}" method="post">
+
     {% csrf_token %}
     {{ form }}
+
     Are you sure you want to delete post:
     <br><br>
-    {{ blog.name }}?
+    {{ blog.food }}?
+    <br><br>
+    {{ blog.price }}?
+    <br><br>
+    {{ blog.quantity }}?
     <br><br>
 
     <button class="button" type="submit">Delete</button>
 
-    <a href="{% url 'list_rest' %}">Cancel</a>
+    <a href="{% url 'list_menu' %}">Cancel</a>
 
 </form>
 {% endif %}

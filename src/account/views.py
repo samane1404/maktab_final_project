@@ -1,15 +1,8 @@
-from django.http import JsonResponse
-from django.template import RequestContext
-from django.views.generic import CreateView
-
-from store.forms import *
-from store.models import *
 from django.views import View
 from django.contrib.auth.views import LoginView
-from .forms import RegisterForm, LoginForm
 from django.contrib.auth.views import PasswordResetView
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .forms import *
 from django.urls import reverse_lazy
@@ -20,13 +13,12 @@ from django.contrib.messages.views import SuccessMessageMixin
 def home(request):
     return render(request, 'home.html')
 
+def admin_required(login_url=None):
+    return user_passes_test(lambda u: u.is_superuser, login_url=login_url)
+
 
 def admin(request):
     return render(request, 'account/profile_admin.html')
-
-
-def manager(request):
-    return render(request, 'account/profile_manager.html')
 
 
 class RegisterView(View):
@@ -82,21 +74,16 @@ class CustomLoginView(LoginView):
         remember_me = form.cleaned_data.get('remember_me')
 
         if not remember_me:
-            # set session expiry to 0 seconds. So it will automatically close the session after the browser is closed.
             self.request.session.set_expiry(0)
 
-            # Set session as modified to force data updates/cookie to be saved.
             self.request.session.modified = True
 
-        # else browser session will be as long as the session cookie time "SESSION_COOKIE_AGE" defined in settings.py
         return super(CustomLoginView, self).form_valid(form)
 
     def dispatch(self, request, *args, **kwargs):
-        # will redirect to the home page if a user tries to access the register page while logged in
         if request.user.is_authenticated:
             return redirect(to='/')
 
-        # else process dispatch as it otherwise normally would
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -107,21 +94,16 @@ class CustomLoginView1(LoginView):
         remember_me = form.cleaned_data.get('remember_me')
 
         if not remember_me:
-            # set session expiry to 0 seconds. So it will automatically close the session after the browser is closed.
             self.request.session.set_expiry(0)
 
-            # Set session as modified to force data updates/cookie to be saved.
             self.request.session.modified = True
 
-        # else browser session will be as long as the session cookie time "SESSION_COOKIE_AGE" defined in settings.py
         return super(CustomLoginView1, self).form_valid(form)
 
     def dispatch(self, request, *args, **kwargs):
-        # will redirect to the home page if a user tries to access the register page while logged in
         if request.user.is_authenticated:
             return redirect(to='/')
 
-        # else process dispatch as it otherwise normally would
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -136,14 +118,8 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     success_url = reverse_lazy('users-home')
 
 
-# @login_required
-# def profile(request):
-#     return render(request, 'account/profile.html')
-
-
 @login_required
 def profile(request):
-    # address = Address.objects.get(customer=request.user.id)
     heading_message = 'Formset Demo'
     user_form = UpdateUserForm(request.POST, instance=request.user)
     profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
@@ -184,4 +160,19 @@ def profile_manager(request):
         user_form = UpdateUserForm(instance=request.user)
     return render(request, 'account/profile_manager.html',
                   {'user_form': user_form})
+
+
+def list_user(request):
+    context = {"customer": Customer.objects.filter(is_staff=False)}
+    return render(request, "account/list_user.html", context)
+
+
+def list_manager(request):
+    context = {"customer": Customer.objects.filter(is_staff=True)}
+    return render(request, "account/list_manager.html", context)
+
+
+
+
+
 

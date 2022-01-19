@@ -18,4 +18,7 @@ urlpatterns = [
                                            authentication_form=LoginForm), name='login_admin'),
     path('logout/', auth_views.LogoutView.as_view(template_name='account/logout.html'), name='logout'),
     path('profile/', profile, name='users-profile'),
+    path('list_user/', list_user, name='list_user'),
+    path('list_manager/', list_manager, name='list_manager'),
+
 ]

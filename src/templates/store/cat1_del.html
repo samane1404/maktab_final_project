@@ -4,8 +4,8 @@
 {% load static %}
 {% if user.is_superuser %}
 
-<h1>Delete Restaurant</h1>
-<form action="{% url 'rest_del' blog.pk %}" method="post">
+<h1>Delete Category</h1>
+<form action="{% url 'cat1_del' blog.pk %}" method="post">
     {% csrf_token %}
     {{ form }}
     Are you sure you want to delete post:
@@ -15,7 +15,7 @@
 
     <button class="button" type="submit">Delete</button>
 
-    <a href="{% url 'list_rest' %}">Cancel</a>
+    <a href="{% url 'list_meel' %}">Cancel</a>
 
 </form>
 {% endif %}

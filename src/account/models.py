@@ -15,7 +15,7 @@ class CustomUser(AbstractUser):
 
 
 class Customer(CustomUser):
-    # address = models.ManyToManyField('Address')
+    # device = models.CharField(max_length=100, blank=True, null=True)
     class Meta:
         proxy = True
     def save(self, *arg, **kwarg):
@@ -23,7 +23,12 @@ class Customer(CustomUser):
             self.is_superuser = False
             self.is_staff = False
         return super(Customer, self).save(*arg, **kwarg)
-
+    # def __str__(self):
+    #     if self.username:
+    #         name = self.username
+    #     else:
+    #         name = self.device
+    #     return(name)
 
 
 class Manager(CustomUser):

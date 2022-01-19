@@ -98,4 +98,10 @@ class RegisterAdmin(admin.ModelAdmin):
 
 
 
-admin.site.register(Profile)
+@admin.register(Profile)
+class RegisterAdmin(admin.ModelAdmin):
+    list_display = ['city', 'bio', 'address']
+    list_display_links = ['bio']
+    list_filter = ['city']
+    list_per_page = 10
+    search_fields = ['city']

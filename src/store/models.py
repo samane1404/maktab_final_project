@@ -86,23 +86,6 @@ class Menu(models.Model):
         ordering = ['created_time']
 
 
-class OrderItem(models.Model):
-    quantity = models.IntegerField(blank=True, null=True)
-    order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_set', blank=True, null=True)
-    menu = models.ManyToManyField(Menu, related_name='orderitem_set')
-    created_time = models.DateTimeField(auto_now_add=True)
-    price = models.IntegerField(blank=True, null=True)
-
-    def __str__(self):
-        return str(self.quantity)
-
-    def get_total_item_price(self):
-        return self.quantity * self.menu.price
-
-    class Meta:
-        ordering = ['created_time']
-
-
 class Order(models.Model):
     STATUS = (("order", "order"), ("registration", "registration"), ("sent", "sent"), ("delivery", "delivery"))
     status = models.CharField(max_length=20, choices=STATUS, default='order')
@@ -112,9 +95,39 @@ class Order(models.Model):
     def __str__(self):
         return str(self.status)
 
+    @property
+    def get_cart_total(self):
+        orderitems = self.order_set.all()
+        total = sum([menu.get_total for menu in orderitems])
+        return total
+
+    @property
+    def get_cart_items(self):
+        orderitems = self.order_set.all()
+        total = sum([menu.quantity for menu in orderitems])
+        return total
+
     class Meta:
         ordering = ['created_time']
 
+
+class OrderItem(models.Model):
+    quantity = models.IntegerField(blank=True, null=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_set', blank=True, null=True)
+    menu = models.ManyToManyField(Menu, related_name='orderitem_set')
+    created_time = models.DateTimeField(auto_now_add=True)
+    price = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return str(self.quantity)
+
+    class Meta:
+        ordering = ['created_time']
+
+    @property
+    def get_total(self):
+        total = self.menu.price * self.quantity
+        return total
 
 
 def save(self, *args, **kwargs):

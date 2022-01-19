@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Logout{% endblock title %}
+{% block content %}
+{% load static %}
+{% if user.is_staff %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<br>
+                    <th scope="col"><a href="{% url 'category1_create' %}" class="btn btn-danger">Create</a></th>
+<div class="container mt-5">
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">id</a></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Update</a></th>
+					<th scope="col">Delete</a></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for data in customer %}
+                <tr>
+                        <th scope="col">{{ data.id}}</th>
+                        <th scope="col">{{ data.name }}</th>
+                        <th scope="col"><a href="{% url 'cat2_edit' data.pk %}" class="btn btn-danger">Update</a></th>
+                        <th scope="col"><a href="{% url 'cat2_del' data.pk %}" class="btn btn-danger">Delete</a></th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+</div>
+{% endblock content %}

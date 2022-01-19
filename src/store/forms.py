@@ -104,3 +104,28 @@ class MenuDeleteForm(ModelForm):
     class Meta:
         model = Menu
         fields = []
+
+class RestDeleteForm(ModelForm):
+    class Meta:
+        model = Restaurant
+        fields = []
+
+class BranchDeleteForm(ModelForm):
+    class Meta:
+        model = Branch
+        fields = []
+
+class FoodDeleteForm(ModelForm):
+    class Meta:
+        model = Food
+        fields = []
+
+class CatMeelDeleteForm(ModelForm):
+    class Meta:
+        model = CategoryMeel
+        fields = []
+
+class CatFoodDeleteForm(ModelForm):
+    class Meta:
+        model = CategoryFood
+        fields = []

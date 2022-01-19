@@ -76,8 +76,8 @@
                     <th >{{re.food.category_meel.all|join:', '}}</th>
                     <th>
                         {% if user.is_authenticated and user.is_staff %}
-                        <a href="{% url 'views' %}" class="btn btn-danger">edit</a>
-                        {% else %}
+                        <th scope="col"><a href="{% url 'menu_edit' re.pk %}" class="btn btn-danger">Update</a></th>
+                        <th scope="col"><a href="{% url 'menu_del' re.pk %}" class="btn btn-danger">Delete</a></th>                        {% else %}
                         <a href="#" class="btn btn-danger">add to cart</a>
                         {% endif %}
                     </th>

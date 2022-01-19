@@ -1,4 +1,4 @@
-from django.forms import formset_factory
+from django.forms import formset_factory, ModelForm
 
 from store.models import *
 from django.contrib.auth.models import User
@@ -200,3 +200,4 @@ class LoginForm1(AuthenticationForm):
         model = Manager
         fields = ['username', 'password', 'remember_me']
 # -----------------------------------------------------------------------------------
+
