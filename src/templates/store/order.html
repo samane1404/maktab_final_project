@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Logout{% endblock title %}
+{% block content %}
+{% load static %}
+<div class="container text-white p-4">
+    <p class="display-4">Your Orders</p>
+    <hr style="background: white;">
+    <table class="table">
+        <thead>
+        <tr class="bg-primary">
+            <th>S.N</th>
+            <th>Image</th>
+            <th>Food</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in order %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td><img class="rounded-circle" height="60px" src="{{i.order_set.menu.image.url}}"></td>
+            <td>{{i.order_set.menu.food}}</td>
+            <td>{{i.order_set.menu.price}}</td>
+            <td>{{i.order_set.menu.quantity}}</td>
+            <td>{{i|total_price:request.session.cart|currency}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+{% endblock content %}

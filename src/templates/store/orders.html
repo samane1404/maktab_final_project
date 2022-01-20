@@ -2,17 +2,18 @@
 {% block title %}Logout{% endblock title %}
 {% block content %}
 {% load static %}
-{% if user.is_superuser %}
+{% if user.is_staff %}
 
 <div class="container mt-5">
         <table class="table table-striped mt-4">
             <thead>
                 <tr>
                     <th scope="col">number</th>
-                    <th scope="col">quantity</th>
                     <th scope="col">name</th>
                     <th scope="col">branch</th>
                     <th scope="col">restaurant</th>
+                    <th scope="col">customer & quantity</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -21,11 +22,11 @@
                 {% for a in aaa %}
                 <tr>
                     <th scope="row">{{forloop.counter}}</th>
-                    <th >{{a.orderitem_set.all|join:', '}}</th>
                     <th >{{a}}</th>
                     <th >{{a.branch }}</th>
                     <th >{{a.branch.restaurant}}</th>
-<!--                    <th>-->
+                    <th >{{a.orderitem_set.all|join:', '}}</th>
+                    <!--                    <th>-->
 <!--                        <a href="#" class="btn btn-danger">view</a>-->
 <!--                    </th>-->
                 </tr>

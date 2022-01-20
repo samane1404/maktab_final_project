@@ -47,20 +47,23 @@
                             {{ profile_form.city }}
                     <label class="small mb-1">Address:</label>
                     {{ profile_form.address }}
+                    <label class="small mb-1">orders:</label>
+                    <br>
+                    {{ user.custom.all|join:', '}}
                 </div>
             </div>
             <br>
                     {{ formset.management_form }}
-                    {% for form in formset %}
-                    <div class='table'>
+<!--                    {% for form in formset %}-->
+<!--                    <div class='table'>-->
 <!--                    <table class='no_error'>-->
 <!--                        <label class="small mb-1">Address:</label>-->
-<!--&lt;!&ndash;                        <p>{{ address }}</p>&ndash;&gt;-->
+<!--                        <p>{{ address }}</p>-->
 <!--                        {{ form.address }}-->
 <!--                    </table>-->
 
-                    </div>
-                {% endfor %}
+<!--                    </div>-->
+<!--                {% endfor %}-->
 <!--                <input type="button" value="Add More" id="add_more">-->
             <br><br>
             <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>

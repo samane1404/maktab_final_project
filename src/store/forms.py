@@ -3,6 +3,7 @@ from django.forms import formset_factory, ModelForm
 
 from .models import *
 
+
 # # class forms.ModelForm(forms.Form):
 # #     action = forms.CharField(max_length=60, widget=forms.HiddenInput())
 #
@@ -69,63 +70,74 @@ from .models import *
 # CategoryFoodFormset = formset_factory(CategoryFoodForm, extra=1)
 
 
-
 class RestaurantForm(ModelForm):
     class Meta:
         model = Restaurant
         fields = '__all__'
+
 
 class CategoeyForm1(ModelForm):
     class Meta:
         model = CategoryMeel
         fields = '__all__'
 
+
 class CategoeyForm2(ModelForm):
     class Meta:
         model = CategoryFood
         fields = '__all__'
+
 
 class BranchForm(ModelForm):
     class Meta:
         model = Branch
         fields = '__all__'
 
+
 class MenuForm(ModelForm):
     class Meta:
         model = Menu
         fields = '__all__'
+
 
 class FoodForm(ModelForm):
     class Meta:
         model = Food
         fields = '__all__'
 
+
 class MenuDeleteForm(ModelForm):
     class Meta:
         model = Menu
         fields = []
+
 
 class RestDeleteForm(ModelForm):
     class Meta:
         model = Restaurant
         fields = []
 
+
 class BranchDeleteForm(ModelForm):
     class Meta:
         model = Branch
         fields = []
+
 
 class FoodDeleteForm(ModelForm):
     class Meta:
         model = Food
         fields = []
 
+
 class CatMeelDeleteForm(ModelForm):
     class Meta:
         model = CategoryMeel
         fields = []
 
+
 class CatFoodDeleteForm(ModelForm):
     class Meta:
         model = CategoryFood
         fields = []
+

@@ -1,3 +1,6 @@
+from django.contrib import messages
+from django.views.generic import DetailView
+
 from .forms import *
 from django.db.models import Q, Sum
 from django.http import JsonResponse
@@ -44,6 +47,10 @@ def list(req):
         'menu_sett': b,
     }
     return render(req, 'home.html', context)
+
+class details(DetailView):
+    model = Menu
+    template_name = "store/details.html"
 
 
 def list_restaurant(req):
@@ -618,12 +625,14 @@ def list_menu(request):
     return render(request, "store/list_menu.html", context)
 
 
-
-
-
 def list_view(request):
     context = {"dataset": Menu.objects.all()}
     return render(request, "store/sss.html", context)
 
 
+# def orderpage(request):
+#     customer = request.session.get('customer')
+#     order = Order.get_order_by_customer(customer)
+#     print(order)
+#     return render(request, 'store/order.html', {'order': order})
 

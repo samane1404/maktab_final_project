@@ -89,24 +89,13 @@ class Menu(models.Model):
 class Order(models.Model):
     STATUS = (("order", "order"), ("registration", "registration"), ("sent", "sent"), ("delivery", "delivery"))
     status = models.CharField(max_length=20, choices=STATUS, default='order')
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='custom')
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.status)
-
-    @property
-    def get_cart_total(self):
-        orderitems = self.order_set.all()
-        total = sum([menu.get_total for menu in orderitems])
-        return total
-
-    @property
-    def get_cart_items(self):
-        orderitems = self.order_set.all()
-        total = sum([menu.quantity for menu in orderitems])
-        return total
-
+        return "{0} (from {1})".format(self.customer, self.created_time)
+    def get_order_by_customer(customer_id):
+        return Order.objects.filter(customer=customer_id)
     class Meta:
         ordering = ['created_time']
 
@@ -119,7 +108,7 @@ class OrderItem(models.Model):
     price = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return str(self.quantity)
+        return "{0} (from {1})".format(self.quantity, self.order)
 
     class Meta:
         ordering = ['created_time']

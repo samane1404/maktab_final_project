@@ -78,8 +78,9 @@
                         {% if user.is_authenticated and user.is_staff %}
                         <th scope="col"><a href="{% url 'menu_edit' re.pk %}" class="btn btn-danger">Update</a></th>
                         <th scope="col"><a href="{% url 'menu_del' re.pk %}" class="btn btn-danger">Delete</a></th>                        {% else %}
-                        <a href="#" class="btn btn-danger">add to cart</a>
+
                         {% endif %}
+                    <th scope="col"><a href="#" class="btn btn-danger">add to cart</a></th>
                     </th>
                 </tr>
                 {% endfor %}
@@ -97,6 +98,7 @@
 <script>
     $(document).ready(function () {
     $('#tags').autocomplete({
+
         source: "",
         minLength: 1,
         autoFocus: true,
