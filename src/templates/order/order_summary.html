@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}food{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<div class="container mt-5">
+    <h2>Order Summary</h2>
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">number</th>
+                    <th scope="col">food</th>
+                    <th scope="col">price</th>
+                    <th scope="col">quantity</th>
+                    <th scope="col">total price</th>
+
+                </tr>
+            </thead>
+            <tbody>
+            {% for order_item in object.items.all %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <th >{{order_item.item.food}}</th>
+                    <th >{{order_item.item.price}}$</th>
+                    <th ><a href="{% url 'remove_single_item_from_cart' order_item.item.slug %}"><i class="fas fa-minus ml-2" style="color:red"></i></a>
+                        {{order_item.quantity}}
+                        <a href="{% url 'add_to_cart' order_item.item.slug %}"><i class="fas fa-plus mr-2" style="color:green"></i></a></th>
+                    <th >{{order_item.get_total_item_price}}$</th>
+                    <th>
+                        <a href="{% url 'remove_from_cart' order_item.item.slug %}">
+                            <i class="fas fa-trash float-right" style="color:red"></i></a>
+                    </th>
+                </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Your cart is empty!</td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <a class="btn btn-info float-right ml-2" href="/">continue shopping</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% if object.get_total %}
+            <tr>
+                <td colspan="4"><b>order total</b></td>
+                <td ><b>{{ object.get_total }}$</b></td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <a class="btn btn-info float-right ml-2" href="/">continue shopping</a>
+                    <a class="btn btn-danger float-right" href="{% url 'checkout' %}">proceed to checkout</a>
+                </td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+<br>
+
+{% endblock content %}

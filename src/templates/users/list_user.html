@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}user{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{% if user.is_superuser %}
+
+
+<div class="container mt-5">
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">id</a></th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Update</a></th>
+					<th scope="col">Delete</a></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for re in list_user %}
+                        <th scope="row">{{forloop.counter}}</th>
+                        <th scope="col">{{ re.first_name }}</th>
+                        <th scope="col">{{ re.last_name }}</th>
+                        <th scope="col">{{ re.username }}</th>
+                        <th scope="col">{{ re.email }}</th>
+                        <th scope="col"><a href="{% url 'edit_user' re.pk %}" class="btn btn-danger">Update</a></th>
+                        <th scope="col"><a href="{% url 'delete_user' re.pk %}" class="btn btn-danger">Delete</a></th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</form>
+{% endif %}
+
+{% endblock content %}

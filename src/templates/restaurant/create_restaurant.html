@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}restaurant{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{% if user.is_staff %}
+
+<h1>Add restaurant</h1>
+<form action="{% url 'create_restaurant' %}"
+      method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+<button class="button" type="submit">Add</button>
+{% if user.is_superuser %}
+
+<div class="container mt-5">
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">id</a></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Update</a></th>
+					<th scope="col">Delete</a></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for re in restaurant_list %}
+                <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <th scope="col">{{ re.name }}</th>
+                        <th scope="col"><a href="{% url 'edit_restaurant' re.pk %}" class="btn btn-danger">Update</a></th>
+                        <th scope="col"><a href="{% url 'delete_restaurant' re.pk %}" class="btn btn-danger">Delete</a></th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+</form>
+{% endif %}
+
+{% endblock content %}

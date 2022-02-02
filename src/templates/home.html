@@ -3,8 +3,6 @@
 {% block content %}
 {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <div>
         <p class="lead">
             <center>
@@ -12,41 +10,6 @@
             </center>
         </p>
     </div>
-
-<div class="row">
-    <div class="col-md-7">
-            <br>
-            <a href="{% url 'list_restaurant' %}" class="btn btn-danger">Restaurant List</a>
-            <a href="{% url 'list_food' %}" class="btn btn-danger">Food List</a>
-            <a href="{% url 'best_food' %}" class="btn btn-danger">The best-selling food</a>
-            <a href="{% url 'best_restaurant' %}" class="btn btn-danger">The best-selling restaurant</a>
-        </div>
-    <div class="col-md-5">
-        <br>
-
-    <form action="{% url 'search' %}" class="form-inline" method="get">
-
-       <div class="form-group mb-8">
-
-            <h1>{% if type %}{{ type.name }}{% else %}{% endif %}</h1>
-
-       </div>
-
-       <div class="form-group mx-sm-3 mb-2">
-
-        <label for="" class="sr-only">search</label>
-
-        <input name="search" type="" class="form-control" id="tags" placeholder="food, restaurant ...">
-
-        </div>
-
-        <button type="submit" class="btn btn-danger btn-lg mb-2">Search</button>
-
-   </form>
-
-    </div>
-</div>
-
 <div class="container mt-5">
         <table class="table table-striped mt-4">
             <thead>
@@ -57,54 +20,27 @@
                     <th scope="col">price</th>
                     <th scope="col">quantity</th>
                     <th scope="col">branch/restaurant</th>
-                    <th scope="col">meel</th>
+                    <th scope="col">meal</th>
+                    <th scope="col"> </th>
                 </tr>
             </thead>
             <tbody>
-                {% comment %} {% for re in recipes %} {% endcomment %}
-                {% comment %} {% for re in recipe_list %} {% endcomment %}
                 {% for re in object_list %}
                 <tr>
                     <th scope="row">{{forloop.counter}}</th>
                     <th >
-                    <img src="{{re.image.url}}" alt="" style="height:200px" class="img-fluid img-responsive">
+                    <img src="{{re.image.url}}" alt="" style="height:150px" class="img-fluid img-responsive">
                     </th>
                     <th >{{re.food}}</th>
-                    <th >{{re.price}}</th>
+                    <th >{{re.price}} $</th>
                     <th >{{re.quantity}}</th>
                     <th >{{re.branch}}/{{re.branch.restaurant}}</th>
-                    <th >{{re.food.category_meel.all|join:', '}}</th>
-                    <th>
-                        {% if user.is_authenticated and user.is_staff %}
-                        <th scope="col"><a href="{% url 'menu_edit' re.pk %}" class="btn btn-danger">Update</a></th>
-                        <th scope="col"><a href="{% url 'menu_del' re.pk %}" class="btn btn-danger">Delete</a></th>                        {% else %}
-
-                        {% endif %}
-                    <th scope="col"><a href="#" class="btn btn-danger">add to cart</a></th>
-                    </th>
+                    <th >{{re.category_meel.all|join:', '}}</th>
+                    <th scope="col"><a href="{{ re.get_absolute_url }}" class="btn btn-danger">Details</a></th>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"></script>
-
-
-
-<script>
-    $(document).ready(function () {
-    $('#tags').autocomplete({
-
-        source: "",
-        minLength: 1,
-        autoFocus: true,
-    });
-});
-</script>
-
 
 {% endblock content %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Menu{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{% if user.is_staff %}
+
+<div class="container mt-5">
+        <table class="table table-striped mt-4">
+            <tbody>
+            <a href="{% url 'create_restaurant' %}" class="btn btn-danger">Restaurant</a>
+            <a href="{% url 'create_branch' %}" class="btn btn-danger">Branch</a>
+            <a href="{% url 'create_food' %}" class="btn btn-danger">Food</a>
+            <a href="{% url 'create_menu' %}" class="btn btn-danger">Menu</a>
+<table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">id</a></th>
+                    <th scope="col">quantity of Food from user</th>
+                    <th scope="col">address</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for re in object_list %}
+                        <th scope="row">{{forloop.counter}}</th>
+                        <th scope="col">{{ re }}</th>
+                        <th scope="col">{{ re.order_set.all|join:', '}}</th>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+            </tbody>
+        </table>
+    </div>
+
+</form>
+{% endif %}
+
+{% endblock content %}

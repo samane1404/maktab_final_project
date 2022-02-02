@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}food{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<div class="container mt-5">
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">image</th>
+                    <th scope="col">food</th>
+                     <th scope="col">category</th>
+                    <th scope="col">meal</th>
+                    <th scope="col">price</th>
+                    <th scope="col">quantity</th>
+                    <th scope="col">branch/restaurant</th>
+                      <th scope="col">address</th>
+                    <th scope="col"> </th>
+                    <th scope="col"> </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <th >
+                    <img src="{{menu.image.url}}" alt="" style="height:100px" class="img-fluid img-responsive">
+                    </th>
+                    <th >{{menu.food}}</th>
+                      <th name="foo">{{menu.food.category_food}}</th>
+                    <th >{{menu.category_meel.all|join:', '}}</th>
+                    <th >{{menu.price}} $</th>
+                    <th >{{menu.quantity}}</th>
+                    <th >{{menu.branch}}/{{menu.branch.restaurant}}</th>
+                      <th >{{menu.branch.address}}</th>
+
+                    <th scope="col"><a href="{{ object.get_add_to_cart_url }}" class="btn btn-success"><i class='fas fa-shopping-cart' style='font-size:48px;color:white'></i></a></th>
+                    <th scope="col"><a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger"><i class='fas fa-shopping-cart' style='font-size:48px;color:white'></i></a></th>
+
+                </tr>
+        <table class="table table-striped mt-4">
+        <tr>
+                <th scope="col">food_description:</th>
+                <th >{{menu.food.description}}</th>
+                <th scope="col">branch_description:</th>
+                <th >{{menu.branch.description}}</th>
+
+        </tr>
+        </table>
+            </tbody>
+        </table>
+<br>
+
+{% endblock content %}

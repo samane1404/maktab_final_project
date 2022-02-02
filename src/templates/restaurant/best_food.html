@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}best{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<div class="container mt-5">
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">number</th>
+                    <th scope="col">image</th>
+                    <th scope="col">food</th>
+                    <th scope="col">price</th>
+                    <th scope="col">quantity</th>
+                    <th scope="col">branch/restaurant</th>
+                    <th scope="col">meal</th>
+                    <th scope="col"> </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in aaa %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <th >
+                    <img src="{{a.image.url}}" alt="" style="height:150px" class="img-fluid img-responsive">
+                    </th>
+                    <th >{{a.food}}</th>
+                    <th >{{a.price}} $</th>
+                    <th >{{a.quantity}}</th>
+                    <th >{{a.branch}}/{{re.branch.restaurant}}</th>
+                    <th >{{a.category_meel.all|join:', '}}</th>
+                    <th scope="col"><a href="{{ a.get_absolute_url }}" class="btn btn-danger">Details</a></th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

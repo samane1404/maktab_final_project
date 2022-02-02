@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}branch{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{% if user.is_superuser %}
+
+<h1>Delete Branch</h1>
+<form action="{% url 'delete_branch' branch.pk %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    Are you sure you want to delete it:
+    <br><br>
+    {{ branch.name }}?
+    <br><br>
+
+    <button class="button" type="submit">Delete</button>
+
+    <a href="{% url 'create_branch' %}">Cancel</a>
+
+</form>
+
+{% endif %}
+{% endblock content %}

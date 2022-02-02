@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}category_meel{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{% if user.is_superuser %}
+
+<h1>Edit Category Meel</h1>
+<form action="{% url 'edit_category_meel' category_meel.pk %}"
+      method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+<button class="button" type="submit">Update</button>
+</form>
+
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}history{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">id</a></th>
+                    <th scope="col">orders</th>
+                    <th scope="col">status</th>
+                    <th scope="col">address</th>
+
+                </tr>
+            </thead>
+            <tbody>
+            {% for re in object_list %}
+                        <th scope="row">{{forloop.counter}}</th>
+            <th scope="col">{{ re.items.all|join:', ' }}</th>
+                        <th scope="col">{{ re.ordered }}</th>
+                        <th scope="col">{{ re.address }}</th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+            </tbody>
+        </table>
+
+{% endblock content %}

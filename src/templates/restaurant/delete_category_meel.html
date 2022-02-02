@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}category meel{% endblock title %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{% if user.is_superuser %}
+
+<h1>Delete Category Meel</h1>
+<form action="{% url 'delete_category_meel' category_meel.pk %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    Are you sure you want to delete it:
+    <br><br>
+    {{ category_meel.name }}?
+    <br><br>
+
+    <button class="button" type="submit">Delete</button>
+
+    <a href="{% url 'create_category_meel' %}">Cancel</a>
+
+</form>
+
+{% endif %}
+{% endblock content %}
